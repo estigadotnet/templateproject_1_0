@@ -669,6 +669,9 @@ class r202_users_summary extends r202_users
 		$this->UserLevel->setVisibility();
 		$this->Username->setVisibility();
 		$this->sekolah_id->setVisibility();
+		$this->tahunajaran_id->setVisibility();
+		$this->kelas_id->setVisibility();
+		$this->semester_id->setVisibility();
 
 		// Set up User ID
 		$filter = "";
@@ -802,6 +805,9 @@ class r202_users_summary extends r202_users
 			$data["Username"] = $record['Username'];
 			$data["Activated"] = $record['Activated'];
 			$data["sekolah_id"] = $record['sekolah_id'];
+			$data["tahunajaran_id"] = $record['tahunajaran_id'];
+			$data["kelas_id"] = $record['kelas_id'];
+			$data["semester_id"] = $record['semester_id'];
 			$this->Rows[] = $data;
 		}
 		$this->EmployeeID->setDbValue($record['EmployeeID']);
@@ -828,6 +834,9 @@ class r202_users_summary extends r202_users
 		$this->Activated->setDbValue($record['Activated']);
 		$this->Profile->setDbValue($record['Profile']);
 		$this->sekolah_id->setDbValue($record['sekolah_id']);
+		$this->tahunajaran_id->setDbValue($record['tahunajaran_id']);
+		$this->kelas_id->setDbValue($record['kelas_id']);
+		$this->semester_id->setDbValue($record['semester_id']);
 	}
 
 	// Render row
@@ -869,6 +878,9 @@ class r202_users_summary extends r202_users
 		// UserLevel
 		// Username
 		// sekolah_id
+		// tahunajaran_id
+		// kelas_id
+		// semester_id
 
 		if ($this->RowType == ROWTYPE_SEARCH) { // Search row
 		} elseif ($this->RowType == ROWTYPE_TOTAL && !($this->RowTotalType == ROWTOTAL_GROUP && $this->RowTotalSubType == ROWTOTAL_HEADER)) { // Summary row
@@ -882,6 +894,15 @@ class r202_users_summary extends r202_users
 
 			// sekolah_id
 			$this->sekolah_id->HrefValue = "";
+
+			// tahunajaran_id
+			$this->tahunajaran_id->HrefValue = "";
+
+			// kelas_id
+			$this->kelas_id->HrefValue = "";
+
+			// semester_id
+			$this->semester_id->HrefValue = "";
 		} else {
 			if ($this->RowTotalType == ROWTOTAL_GROUP && $this->RowTotalSubType == ROWTOTAL_HEADER) {
 			} else {
@@ -938,6 +959,77 @@ class r202_users_summary extends r202_users
 			$this->sekolah_id->CellCssClass = ($this->RecordCount % 2 != 1 ? "ew-table-alt-row" : "ew-table-row");
 			$this->sekolah_id->ViewCustomAttributes = "";
 
+			// tahunajaran_id
+			$curVal = strval($this->tahunajaran_id->CurrentValue);
+			if ($curVal != "") {
+				$this->tahunajaran_id->ViewValue = $this->tahunajaran_id->lookupCacheOption($curVal);
+				if ($this->tahunajaran_id->ViewValue === NULL) { // Lookup from database
+					$filterWrk = "`id`" . SearchString("=", $curVal, DATATYPE_NUMBER, "");
+					$sqlWrk = $this->tahunajaran_id->Lookup->getSql(FALSE, $filterWrk, '', $this);
+					$rswrk = Conn()->execute($sqlWrk);
+					if ($rswrk && !$rswrk->EOF) { // Lookup values found
+						$arwrk = [];
+						$arwrk[1] = $rswrk->fields('df');
+						$this->tahunajaran_id->ViewValue = $this->tahunajaran_id->displayValue($arwrk);
+						$rswrk->Close();
+					} else {
+						$this->tahunajaran_id->ViewValue = $this->tahunajaran_id->CurrentValue;
+					}
+				}
+			} else {
+				$this->tahunajaran_id->ViewValue = NULL;
+			}
+			$this->tahunajaran_id->CellCssClass = ($this->RecordCount % 2 != 1 ? "ew-table-alt-row" : "ew-table-row");
+			$this->tahunajaran_id->ViewCustomAttributes = "";
+
+			// kelas_id
+			$this->kelas_id->ViewValue = $this->kelas_id->CurrentValue;
+			$curVal = strval($this->kelas_id->CurrentValue);
+			if ($curVal != "") {
+				$this->kelas_id->ViewValue = $this->kelas_id->lookupCacheOption($curVal);
+				if ($this->kelas_id->ViewValue === NULL) { // Lookup from database
+					$filterWrk = "`id`" . SearchString("=", $curVal, DATATYPE_NUMBER, "");
+					$sqlWrk = $this->kelas_id->Lookup->getSql(FALSE, $filterWrk, '', $this);
+					$rswrk = Conn()->execute($sqlWrk);
+					if ($rswrk && !$rswrk->EOF) { // Lookup values found
+						$arwrk = [];
+						$arwrk[1] = $rswrk->fields('df');
+						$this->kelas_id->ViewValue = $this->kelas_id->displayValue($arwrk);
+						$rswrk->Close();
+					} else {
+						$this->kelas_id->ViewValue = $this->kelas_id->CurrentValue;
+					}
+				}
+			} else {
+				$this->kelas_id->ViewValue = NULL;
+			}
+			$this->kelas_id->CellCssClass = ($this->RecordCount % 2 != 1 ? "ew-table-alt-row" : "ew-table-row");
+			$this->kelas_id->ViewCustomAttributes = "";
+
+			// semester_id
+			$this->semester_id->ViewValue = $this->semester_id->CurrentValue;
+			$curVal = strval($this->semester_id->CurrentValue);
+			if ($curVal != "") {
+				$this->semester_id->ViewValue = $this->semester_id->lookupCacheOption($curVal);
+				if ($this->semester_id->ViewValue === NULL) { // Lookup from database
+					$filterWrk = "`id`" . SearchString("=", $curVal, DATATYPE_NUMBER, "");
+					$sqlWrk = $this->semester_id->Lookup->getSql(FALSE, $filterWrk, '', $this);
+					$rswrk = Conn()->execute($sqlWrk);
+					if ($rswrk && !$rswrk->EOF) { // Lookup values found
+						$arwrk = [];
+						$arwrk[1] = $rswrk->fields('df');
+						$this->semester_id->ViewValue = $this->semester_id->displayValue($arwrk);
+						$rswrk->Close();
+					} else {
+						$this->semester_id->ViewValue = $this->semester_id->CurrentValue;
+					}
+				}
+			} else {
+				$this->semester_id->ViewValue = NULL;
+			}
+			$this->semester_id->CellCssClass = ($this->RecordCount % 2 != 1 ? "ew-table-alt-row" : "ew-table-row");
+			$this->semester_id->ViewCustomAttributes = "";
+
 			// UserLevel
 			$this->UserLevel->LinkCustomAttributes = "";
 			$this->UserLevel->HrefValue = "";
@@ -952,6 +1044,21 @@ class r202_users_summary extends r202_users
 			$this->sekolah_id->LinkCustomAttributes = "";
 			$this->sekolah_id->HrefValue = "";
 			$this->sekolah_id->TooltipValue = "";
+
+			// tahunajaran_id
+			$this->tahunajaran_id->LinkCustomAttributes = "";
+			$this->tahunajaran_id->HrefValue = "";
+			$this->tahunajaran_id->TooltipValue = "";
+
+			// kelas_id
+			$this->kelas_id->LinkCustomAttributes = "";
+			$this->kelas_id->HrefValue = "";
+			$this->kelas_id->TooltipValue = "";
+
+			// semester_id
+			$this->semester_id->LinkCustomAttributes = "";
+			$this->semester_id->HrefValue = "";
+			$this->semester_id->TooltipValue = "";
 		}
 
 		// Call Cell_Rendered event
@@ -984,6 +1091,33 @@ class r202_users_summary extends r202_users
 			$hrefValue = &$this->sekolah_id->HrefValue;
 			$linkAttrs = &$this->sekolah_id->LinkAttrs;
 			$this->Cell_Rendered($this->sekolah_id, $currentValue, $viewValue, $viewAttrs, $cellAttrs, $hrefValue, $linkAttrs);
+
+			// tahunajaran_id
+			$currentValue = $this->tahunajaran_id->CurrentValue;
+			$viewValue = &$this->tahunajaran_id->ViewValue;
+			$viewAttrs = &$this->tahunajaran_id->ViewAttrs;
+			$cellAttrs = &$this->tahunajaran_id->CellAttrs;
+			$hrefValue = &$this->tahunajaran_id->HrefValue;
+			$linkAttrs = &$this->tahunajaran_id->LinkAttrs;
+			$this->Cell_Rendered($this->tahunajaran_id, $currentValue, $viewValue, $viewAttrs, $cellAttrs, $hrefValue, $linkAttrs);
+
+			// kelas_id
+			$currentValue = $this->kelas_id->CurrentValue;
+			$viewValue = &$this->kelas_id->ViewValue;
+			$viewAttrs = &$this->kelas_id->ViewAttrs;
+			$cellAttrs = &$this->kelas_id->CellAttrs;
+			$hrefValue = &$this->kelas_id->HrefValue;
+			$linkAttrs = &$this->kelas_id->LinkAttrs;
+			$this->Cell_Rendered($this->kelas_id, $currentValue, $viewValue, $viewAttrs, $cellAttrs, $hrefValue, $linkAttrs);
+
+			// semester_id
+			$currentValue = $this->semester_id->CurrentValue;
+			$viewValue = &$this->semester_id->ViewValue;
+			$viewAttrs = &$this->semester_id->ViewAttrs;
+			$cellAttrs = &$this->semester_id->CellAttrs;
+			$hrefValue = &$this->semester_id->HrefValue;
+			$linkAttrs = &$this->semester_id->LinkAttrs;
+			$this->Cell_Rendered($this->semester_id, $currentValue, $viewValue, $viewAttrs, $cellAttrs, $hrefValue, $linkAttrs);
 		}
 
 		// Call Row_Rendered event
@@ -1037,6 +1171,12 @@ class r202_users_summary extends r202_users
 		if ($this->Username->Visible)
 			$this->DetailColumnCount += 1;
 		if ($this->sekolah_id->Visible)
+			$this->DetailColumnCount += 1;
+		if ($this->tahunajaran_id->Visible)
+			$this->DetailColumnCount += 1;
+		if ($this->kelas_id->Visible)
+			$this->DetailColumnCount += 1;
+		if ($this->semester_id->Visible)
 			$this->DetailColumnCount += 1;
 	}
 
@@ -1161,6 +1301,12 @@ class r202_users_summary extends r202_users
 					break;
 				case "x_sekolah_id":
 					break;
+				case "x_tahunajaran_id":
+					break;
+				case "x_kelas_id":
+					break;
+				case "x_semester_id":
+					break;
 				default:
 					$lookupFilter = "";
 					break;
@@ -1184,6 +1330,12 @@ class r202_users_summary extends r202_users
 						case "x_UserLevel":
 							break;
 						case "x_sekolah_id":
+							break;
+						case "x_tahunajaran_id":
+							break;
+						case "x_kelas_id":
+							break;
+						case "x_semester_id":
 							break;
 					}
 					$ar[strval($row[0])] = $row;
@@ -1314,6 +1466,9 @@ class r202_users_summary extends r202_users
 			$this->UserLevel->setSort("");
 			$this->Username->setSort("");
 			$this->sekolah_id->setSort("");
+			$this->tahunajaran_id->setSort("");
+			$this->kelas_id->setSort("");
+			$this->semester_id->setSort("");
 
 		// Check for an Order parameter
 		} elseif ($orderBy != "") {
@@ -1322,6 +1477,9 @@ class r202_users_summary extends r202_users
 			$this->updateSort($this->UserLevel); // UserLevel
 			$this->updateSort($this->Username); // Username
 			$this->updateSort($this->sekolah_id); // sekolah_id
+			$this->updateSort($this->tahunajaran_id); // tahunajaran_id
+			$this->updateSort($this->kelas_id); // kelas_id
+			$this->updateSort($this->semester_id); // semester_id
 			$sortSql = $this->sortSql();
 			$this->setOrderBy($sortSql);
 			$this->setStartGroup(1);

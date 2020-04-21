@@ -180,6 +180,21 @@ loadjs.ready("head", function() {
 				if (elm && !ew.isHidden(elm) && !ew.hasValue(elm))
 					return this.onError(elm, "<?php echo JsEncode(str_replace("%s", $t201_users_edit->sekolah_id->caption(), $t201_users_edit->sekolah_id->RequiredErrorMessage)) ?>");
 			<?php } ?>
+			<?php if ($t201_users_edit->tahunajaran_id->Required) { ?>
+				elm = this.getElements("x" + infix + "_tahunajaran_id");
+				if (elm && !ew.isHidden(elm) && !ew.hasValue(elm))
+					return this.onError(elm, "<?php echo JsEncode(str_replace("%s", $t201_users_edit->tahunajaran_id->caption(), $t201_users_edit->tahunajaran_id->RequiredErrorMessage)) ?>");
+			<?php } ?>
+			<?php if ($t201_users_edit->kelas_id->Required) { ?>
+				elm = this.getElements("x" + infix + "_kelas_id");
+				if (elm && !ew.isHidden(elm) && !ew.hasValue(elm))
+					return this.onError(elm, "<?php echo JsEncode(str_replace("%s", $t201_users_edit->kelas_id->caption(), $t201_users_edit->kelas_id->RequiredErrorMessage)) ?>");
+			<?php } ?>
+			<?php if ($t201_users_edit->semester_id->Required) { ?>
+				elm = this.getElements("x" + infix + "_semester_id");
+				if (elm && !ew.isHidden(elm) && !ew.hasValue(elm))
+					return this.onError(elm, "<?php echo JsEncode(str_replace("%s", $t201_users_edit->semester_id->caption(), $t201_users_edit->semester_id->RequiredErrorMessage)) ?>");
+			<?php } ?>
 
 				// Call Form_CustomValidate event
 				if (!this.Form_CustomValidate(fobj))
@@ -217,6 +232,12 @@ loadjs.ready("head", function() {
 	ft201_usersedit.lists["x_Activated[]"].options = <?php echo JsonEncode($t201_users_edit->Activated->options(FALSE, TRUE)) ?>;
 	ft201_usersedit.lists["x_sekolah_id"] = <?php echo $t201_users_edit->sekolah_id->Lookup->toClientList($t201_users_edit) ?>;
 	ft201_usersedit.lists["x_sekolah_id"].options = <?php echo JsonEncode($t201_users_edit->sekolah_id->lookupOptions()) ?>;
+	ft201_usersedit.lists["x_tahunajaran_id"] = <?php echo $t201_users_edit->tahunajaran_id->Lookup->toClientList($t201_users_edit) ?>;
+	ft201_usersedit.lists["x_tahunajaran_id"].options = <?php echo JsonEncode($t201_users_edit->tahunajaran_id->lookupOptions()) ?>;
+	ft201_usersedit.lists["x_kelas_id"] = <?php echo $t201_users_edit->kelas_id->Lookup->toClientList($t201_users_edit) ?>;
+	ft201_usersedit.lists["x_kelas_id"].options = <?php echo JsonEncode($t201_users_edit->kelas_id->lookupOptions()) ?>;
+	ft201_usersedit.lists["x_semester_id"] = <?php echo $t201_users_edit->semester_id->Lookup->toClientList($t201_users_edit) ?>;
+	ft201_usersedit.lists["x_semester_id"].options = <?php echo JsonEncode($t201_users_edit->semester_id->lookupOptions()) ?>;
 	loadjs.done("ft201_usersedit");
 });
 </script>
@@ -292,6 +313,51 @@ $t201_users_edit->showMessage();
 <?php echo $t201_users_edit->sekolah_id->Lookup->getParamTag($t201_users_edit, "p_x_sekolah_id") ?>
 </span>
 <?php echo $t201_users_edit->sekolah_id->CustomMsg ?></div></div>
+	</div>
+<?php } ?>
+<?php if ($t201_users_edit->tahunajaran_id->Visible) { // tahunajaran_id ?>
+	<div id="r_tahunajaran_id" class="form-group row">
+		<label id="elh_t201_users_tahunajaran_id" for="x_tahunajaran_id" class="<?php echo $t201_users_edit->LeftColumnClass ?>"><?php echo $t201_users_edit->tahunajaran_id->caption() ?><?php echo $t201_users_edit->tahunajaran_id->Required ? $Language->phrase("FieldRequiredIndicator") : "" ?></label>
+		<div class="<?php echo $t201_users_edit->RightColumnClass ?>"><div <?php echo $t201_users_edit->tahunajaran_id->cellAttributes() ?>>
+<span id="el_t201_users_tahunajaran_id">
+<div class="input-group">
+	<select class="custom-select ew-custom-select" data-table="t201_users" data-field="x_tahunajaran_id" data-page="1" data-value-separator="<?php echo $t201_users_edit->tahunajaran_id->displayValueSeparatorAttribute() ?>" id="x_tahunajaran_id" name="x_tahunajaran_id"<?php echo $t201_users_edit->tahunajaran_id->editAttributes() ?>>
+			<?php echo $t201_users_edit->tahunajaran_id->selectOptionListHtml("x_tahunajaran_id") ?>
+		</select>
+</div>
+<?php echo $t201_users_edit->tahunajaran_id->Lookup->getParamTag($t201_users_edit, "p_x_tahunajaran_id") ?>
+</span>
+<?php echo $t201_users_edit->tahunajaran_id->CustomMsg ?></div></div>
+	</div>
+<?php } ?>
+<?php if ($t201_users_edit->kelas_id->Visible) { // kelas_id ?>
+	<div id="r_kelas_id" class="form-group row">
+		<label id="elh_t201_users_kelas_id" for="x_kelas_id" class="<?php echo $t201_users_edit->LeftColumnClass ?>"><?php echo $t201_users_edit->kelas_id->caption() ?><?php echo $t201_users_edit->kelas_id->Required ? $Language->phrase("FieldRequiredIndicator") : "" ?></label>
+		<div class="<?php echo $t201_users_edit->RightColumnClass ?>"><div <?php echo $t201_users_edit->kelas_id->cellAttributes() ?>>
+<span id="el_t201_users_kelas_id">
+<div class="input-group">
+	<select class="custom-select ew-custom-select" data-table="t201_users" data-field="x_kelas_id" data-page="1" data-value-separator="<?php echo $t201_users_edit->kelas_id->displayValueSeparatorAttribute() ?>" id="x_kelas_id" name="x_kelas_id"<?php echo $t201_users_edit->kelas_id->editAttributes() ?>>
+			<?php echo $t201_users_edit->kelas_id->selectOptionListHtml("x_kelas_id") ?>
+		</select>
+</div>
+<?php echo $t201_users_edit->kelas_id->Lookup->getParamTag($t201_users_edit, "p_x_kelas_id") ?>
+</span>
+<?php echo $t201_users_edit->kelas_id->CustomMsg ?></div></div>
+	</div>
+<?php } ?>
+<?php if ($t201_users_edit->semester_id->Visible) { // semester_id ?>
+	<div id="r_semester_id" class="form-group row">
+		<label id="elh_t201_users_semester_id" for="x_semester_id" class="<?php echo $t201_users_edit->LeftColumnClass ?>"><?php echo $t201_users_edit->semester_id->caption() ?><?php echo $t201_users_edit->semester_id->Required ? $Language->phrase("FieldRequiredIndicator") : "" ?></label>
+		<div class="<?php echo $t201_users_edit->RightColumnClass ?>"><div <?php echo $t201_users_edit->semester_id->cellAttributes() ?>>
+<span id="el_t201_users_semester_id">
+<div class="input-group">
+	<select class="custom-select ew-custom-select" data-table="t201_users" data-field="x_semester_id" data-page="1" data-value-separator="<?php echo $t201_users_edit->semester_id->displayValueSeparatorAttribute() ?>" id="x_semester_id" name="x_semester_id"<?php echo $t201_users_edit->semester_id->editAttributes() ?>>
+			<?php echo $t201_users_edit->semester_id->selectOptionListHtml("x_semester_id") ?>
+		</select>
+</div>
+<?php echo $t201_users_edit->semester_id->Lookup->getParamTag($t201_users_edit, "p_x_semester_id") ?>
+</span>
+<?php echo $t201_users_edit->semester_id->CustomMsg ?></div></div>
 	</div>
 <?php } ?>
 </div><!-- /page* -->
@@ -501,8 +567,8 @@ loadjs.ready(["ft201_usersedit", "datetimepicker"], function() {
 $selwrk = ConvertToBool($t201_users_edit->Activated->CurrentValue) ? " checked" : "";
 ?>
 <div class="custom-control custom-checkbox d-inline-block">
-	<input type="checkbox" class="custom-control-input" data-table="t201_users" data-field="x_Activated" data-page="2" name="x_Activated[]" id="x_Activated[]_769121" value="1"<?php echo $selwrk ?><?php echo $t201_users_edit->Activated->editAttributes() ?>>
-	<label class="custom-control-label" for="x_Activated[]_769121"></label>
+	<input type="checkbox" class="custom-control-input" data-table="t201_users" data-field="x_Activated" data-page="2" name="x_Activated[]" id="x_Activated[]_793834" value="1"<?php echo $selwrk ?><?php echo $t201_users_edit->Activated->editAttributes() ?>>
+	<label class="custom-control-label" for="x_Activated[]_793834"></label>
 </div>
 </span>
 <?php echo $t201_users_edit->Activated->CustomMsg ?></div></div>

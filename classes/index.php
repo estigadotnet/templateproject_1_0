@@ -291,6 +291,12 @@ class index
 			$this->terminate("r202_userssmry.php");
 		if ($Security->allowList(CurrentProjectID() . 't001_sekolah'))
 			$this->terminate("t001_sekolahlist.php");
+		if ($Security->allowList(CurrentProjectID() . 't002_tahunajaran'))
+			$this->terminate("t002_tahunajaranlist.php");
+		if ($Security->allowList(CurrentProjectID() . 't003_kelas'))
+			$this->terminate("t003_kelaslist.php");
+		if ($Security->allowList(CurrentProjectID() . 't004_semester'))
+			$this->terminate("t004_semesterlist.php");
 		if ($Security->allowList(CurrentProjectID() . 't101_berita'))
 			$this->terminate("t101_beritalist.php");
 		if ($Security->allowList(CurrentProjectID() . 't201_users'))

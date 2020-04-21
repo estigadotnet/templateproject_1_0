@@ -49,6 +49,9 @@ class t201_users extends DbTable
 	public $Activated;
 	public $Profile;
 	public $sekolah_id;
+	public $tahunajaran_id;
+	public $kelas_id;
+	public $semester_id;
 
 	// Constructor
 	public function __construct()
@@ -226,6 +229,33 @@ class t201_users extends DbTable
 		$this->sekolah_id->Lookup = new Lookup('sekolah_id', 't001_sekolah', FALSE, 'id', ["Nama","","",""], [], [], [], [], [], [], '', '');
 		$this->sekolah_id->DefaultErrorMessage = $Language->phrase("IncorrectInteger");
 		$this->fields['sekolah_id'] = &$this->sekolah_id;
+
+		// tahunajaran_id
+		$this->tahunajaran_id = new DbField('t201_users', 't201_users', 'x_tahunajaran_id', 'tahunajaran_id', '`tahunajaran_id`', '`tahunajaran_id`', 3, 11, -1, FALSE, '`tahunajaran_id`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'SELECT');
+		$this->tahunajaran_id->Sortable = TRUE; // Allow sort
+		$this->tahunajaran_id->UsePleaseSelect = TRUE; // Use PleaseSelect by default
+		$this->tahunajaran_id->PleaseSelectText = $Language->phrase("PleaseSelect"); // "PleaseSelect" text
+		$this->tahunajaran_id->Lookup = new Lookup('tahunajaran_id', 't002_tahunajaran', FALSE, 'id', ["TahunAjaran","","",""], [], [], [], [], [], [], '', '');
+		$this->tahunajaran_id->DefaultErrorMessage = $Language->phrase("IncorrectInteger");
+		$this->fields['tahunajaran_id'] = &$this->tahunajaran_id;
+
+		// kelas_id
+		$this->kelas_id = new DbField('t201_users', 't201_users', 'x_kelas_id', 'kelas_id', '`kelas_id`', '`kelas_id`', 3, 11, -1, FALSE, '`kelas_id`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'SELECT');
+		$this->kelas_id->Sortable = TRUE; // Allow sort
+		$this->kelas_id->UsePleaseSelect = TRUE; // Use PleaseSelect by default
+		$this->kelas_id->PleaseSelectText = $Language->phrase("PleaseSelect"); // "PleaseSelect" text
+		$this->kelas_id->Lookup = new Lookup('kelas_id', 't003_kelas', FALSE, 'id', ["Kelas","","",""], [], [], [], [], [], [], '', '');
+		$this->kelas_id->DefaultErrorMessage = $Language->phrase("IncorrectInteger");
+		$this->fields['kelas_id'] = &$this->kelas_id;
+
+		// semester_id
+		$this->semester_id = new DbField('t201_users', 't201_users', 'x_semester_id', 'semester_id', '`semester_id`', '`semester_id`', 3, 11, -1, FALSE, '`semester_id`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'SELECT');
+		$this->semester_id->Sortable = TRUE; // Allow sort
+		$this->semester_id->UsePleaseSelect = TRUE; // Use PleaseSelect by default
+		$this->semester_id->PleaseSelectText = $Language->phrase("PleaseSelect"); // "PleaseSelect" text
+		$this->semester_id->Lookup = new Lookup('semester_id', 't004_semester', FALSE, 'id', ["Semester","","",""], [], [], [], [], [], [], '', '');
+		$this->semester_id->DefaultErrorMessage = $Language->phrase("IncorrectInteger");
+		$this->fields['semester_id'] = &$this->semester_id;
 	}
 
 	// Field Visibility
@@ -616,6 +646,9 @@ class t201_users extends DbTable
 		$this->Activated->DbValue = $row['Activated'];
 		$this->Profile->DbValue = $row['Profile'];
 		$this->sekolah_id->DbValue = $row['sekolah_id'];
+		$this->tahunajaran_id->DbValue = $row['tahunajaran_id'];
+		$this->kelas_id->DbValue = $row['kelas_id'];
+		$this->semester_id->DbValue = $row['semester_id'];
 	}
 
 	// Delete uploaded files
@@ -870,6 +903,9 @@ class t201_users extends DbTable
 		$this->Activated->setDbValue($rs->fields('Activated'));
 		$this->Profile->setDbValue($rs->fields('Profile'));
 		$this->sekolah_id->setDbValue($rs->fields('sekolah_id'));
+		$this->tahunajaran_id->setDbValue($rs->fields('tahunajaran_id'));
+		$this->kelas_id->setDbValue($rs->fields('kelas_id'));
+		$this->semester_id->setDbValue($rs->fields('semester_id'));
 	}
 
 	// Render list row values
@@ -905,6 +941,9 @@ class t201_users extends DbTable
 		// Activated
 		// Profile
 		// sekolah_id
+		// tahunajaran_id
+		// kelas_id
+		// semester_id
 		// EmployeeID
 
 		$this->EmployeeID->ViewValue = $this->EmployeeID->CurrentValue;
@@ -1049,6 +1088,72 @@ class t201_users extends DbTable
 		}
 		$this->sekolah_id->ViewCustomAttributes = "";
 
+		// tahunajaran_id
+		$curVal = strval($this->tahunajaran_id->CurrentValue);
+		if ($curVal != "") {
+			$this->tahunajaran_id->ViewValue = $this->tahunajaran_id->lookupCacheOption($curVal);
+			if ($this->tahunajaran_id->ViewValue === NULL) { // Lookup from database
+				$filterWrk = "`id`" . SearchString("=", $curVal, DATATYPE_NUMBER, "");
+				$sqlWrk = $this->tahunajaran_id->Lookup->getSql(FALSE, $filterWrk, '', $this);
+				$rswrk = Conn()->execute($sqlWrk);
+				if ($rswrk && !$rswrk->EOF) { // Lookup values found
+					$arwrk = [];
+					$arwrk[1] = $rswrk->fields('df');
+					$this->tahunajaran_id->ViewValue = $this->tahunajaran_id->displayValue($arwrk);
+					$rswrk->Close();
+				} else {
+					$this->tahunajaran_id->ViewValue = $this->tahunajaran_id->CurrentValue;
+				}
+			}
+		} else {
+			$this->tahunajaran_id->ViewValue = NULL;
+		}
+		$this->tahunajaran_id->ViewCustomAttributes = "";
+
+		// kelas_id
+		$curVal = strval($this->kelas_id->CurrentValue);
+		if ($curVal != "") {
+			$this->kelas_id->ViewValue = $this->kelas_id->lookupCacheOption($curVal);
+			if ($this->kelas_id->ViewValue === NULL) { // Lookup from database
+				$filterWrk = "`id`" . SearchString("=", $curVal, DATATYPE_NUMBER, "");
+				$sqlWrk = $this->kelas_id->Lookup->getSql(FALSE, $filterWrk, '', $this);
+				$rswrk = Conn()->execute($sqlWrk);
+				if ($rswrk && !$rswrk->EOF) { // Lookup values found
+					$arwrk = [];
+					$arwrk[1] = $rswrk->fields('df');
+					$this->kelas_id->ViewValue = $this->kelas_id->displayValue($arwrk);
+					$rswrk->Close();
+				} else {
+					$this->kelas_id->ViewValue = $this->kelas_id->CurrentValue;
+				}
+			}
+		} else {
+			$this->kelas_id->ViewValue = NULL;
+		}
+		$this->kelas_id->ViewCustomAttributes = "";
+
+		// semester_id
+		$curVal = strval($this->semester_id->CurrentValue);
+		if ($curVal != "") {
+			$this->semester_id->ViewValue = $this->semester_id->lookupCacheOption($curVal);
+			if ($this->semester_id->ViewValue === NULL) { // Lookup from database
+				$filterWrk = "`id`" . SearchString("=", $curVal, DATATYPE_NUMBER, "");
+				$sqlWrk = $this->semester_id->Lookup->getSql(FALSE, $filterWrk, '', $this);
+				$rswrk = Conn()->execute($sqlWrk);
+				if ($rswrk && !$rswrk->EOF) { // Lookup values found
+					$arwrk = [];
+					$arwrk[1] = $rswrk->fields('df');
+					$this->semester_id->ViewValue = $this->semester_id->displayValue($arwrk);
+					$rswrk->Close();
+				} else {
+					$this->semester_id->ViewValue = $this->semester_id->CurrentValue;
+				}
+			}
+		} else {
+			$this->semester_id->ViewValue = NULL;
+		}
+		$this->semester_id->ViewCustomAttributes = "";
+
 		// EmployeeID
 		$this->EmployeeID->LinkCustomAttributes = "";
 		$this->EmployeeID->HrefValue = "";
@@ -1168,6 +1273,21 @@ class t201_users extends DbTable
 		$this->sekolah_id->LinkCustomAttributes = "";
 		$this->sekolah_id->HrefValue = "";
 		$this->sekolah_id->TooltipValue = "";
+
+		// tahunajaran_id
+		$this->tahunajaran_id->LinkCustomAttributes = "";
+		$this->tahunajaran_id->HrefValue = "";
+		$this->tahunajaran_id->TooltipValue = "";
+
+		// kelas_id
+		$this->kelas_id->LinkCustomAttributes = "";
+		$this->kelas_id->HrefValue = "";
+		$this->kelas_id->TooltipValue = "";
+
+		// semester_id
+		$this->semester_id->LinkCustomAttributes = "";
+		$this->semester_id->HrefValue = "";
+		$this->semester_id->TooltipValue = "";
 
 		// Call Row Rendered event
 		$this->Row_Rendered();
@@ -1356,6 +1476,18 @@ class t201_users extends DbTable
 		$this->sekolah_id->EditAttrs["class"] = "form-control";
 		$this->sekolah_id->EditCustomAttributes = "";
 
+		// tahunajaran_id
+		$this->tahunajaran_id->EditAttrs["class"] = "form-control";
+		$this->tahunajaran_id->EditCustomAttributes = "";
+
+		// kelas_id
+		$this->kelas_id->EditAttrs["class"] = "form-control";
+		$this->kelas_id->EditCustomAttributes = "";
+
+		// semester_id
+		$this->semester_id->EditAttrs["class"] = "form-control";
+		$this->semester_id->EditCustomAttributes = "";
+
 		// Call Row Rendered event
 		$this->Row_Rendered();
 	}
@@ -1408,6 +1540,9 @@ class t201_users extends DbTable
 					$doc->exportCaption($this->Activated);
 					$doc->exportCaption($this->Profile);
 					$doc->exportCaption($this->sekolah_id);
+					$doc->exportCaption($this->tahunajaran_id);
+					$doc->exportCaption($this->kelas_id);
+					$doc->exportCaption($this->semester_id);
 				} else {
 					$doc->exportCaption($this->EmployeeID);
 					$doc->exportCaption($this->LastName);
@@ -1431,6 +1566,9 @@ class t201_users extends DbTable
 					$doc->exportCaption($this->Username);
 					$doc->exportCaption($this->Activated);
 					$doc->exportCaption($this->sekolah_id);
+					$doc->exportCaption($this->tahunajaran_id);
+					$doc->exportCaption($this->kelas_id);
+					$doc->exportCaption($this->semester_id);
 				}
 				$doc->endExportRow();
 			}
@@ -1485,6 +1623,9 @@ class t201_users extends DbTable
 						$doc->exportField($this->Activated);
 						$doc->exportField($this->Profile);
 						$doc->exportField($this->sekolah_id);
+						$doc->exportField($this->tahunajaran_id);
+						$doc->exportField($this->kelas_id);
+						$doc->exportField($this->semester_id);
 					} else {
 						$doc->exportField($this->EmployeeID);
 						$doc->exportField($this->LastName);
@@ -1508,6 +1649,9 @@ class t201_users extends DbTable
 						$doc->exportField($this->Username);
 						$doc->exportField($this->Activated);
 						$doc->exportField($this->sekolah_id);
+						$doc->exportField($this->tahunajaran_id);
+						$doc->exportField($this->kelas_id);
+						$doc->exportField($this->semester_id);
 					}
 					$doc->endExportRow($rowCnt);
 				}

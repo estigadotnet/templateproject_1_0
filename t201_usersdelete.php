@@ -70,68 +70,23 @@ $t201_users_delete->showMessage();
 <table class="table ew-table">
 	<thead>
 	<tr class="ew-table-header">
-<?php if ($t201_users_delete->LastName->Visible) { // LastName ?>
-		<th class="<?php echo $t201_users_delete->LastName->headerCellClass() ?>"><span id="elh_t201_users_LastName" class="t201_users_LastName"><?php echo $t201_users_delete->LastName->caption() ?></span></th>
-<?php } ?>
-<?php if ($t201_users_delete->FirstName->Visible) { // FirstName ?>
-		<th class="<?php echo $t201_users_delete->FirstName->headerCellClass() ?>"><span id="elh_t201_users_FirstName" class="t201_users_FirstName"><?php echo $t201_users_delete->FirstName->caption() ?></span></th>
-<?php } ?>
-<?php if ($t201_users_delete->Title->Visible) { // Title ?>
-		<th class="<?php echo $t201_users_delete->Title->headerCellClass() ?>"><span id="elh_t201_users_Title" class="t201_users_Title"><?php echo $t201_users_delete->Title->caption() ?></span></th>
-<?php } ?>
-<?php if ($t201_users_delete->TitleOfCourtesy->Visible) { // TitleOfCourtesy ?>
-		<th class="<?php echo $t201_users_delete->TitleOfCourtesy->headerCellClass() ?>"><span id="elh_t201_users_TitleOfCourtesy" class="t201_users_TitleOfCourtesy"><?php echo $t201_users_delete->TitleOfCourtesy->caption() ?></span></th>
-<?php } ?>
-<?php if ($t201_users_delete->BirthDate->Visible) { // BirthDate ?>
-		<th class="<?php echo $t201_users_delete->BirthDate->headerCellClass() ?>"><span id="elh_t201_users_BirthDate" class="t201_users_BirthDate"><?php echo $t201_users_delete->BirthDate->caption() ?></span></th>
-<?php } ?>
-<?php if ($t201_users_delete->HireDate->Visible) { // HireDate ?>
-		<th class="<?php echo $t201_users_delete->HireDate->headerCellClass() ?>"><span id="elh_t201_users_HireDate" class="t201_users_HireDate"><?php echo $t201_users_delete->HireDate->caption() ?></span></th>
-<?php } ?>
-<?php if ($t201_users_delete->Address->Visible) { // Address ?>
-		<th class="<?php echo $t201_users_delete->Address->headerCellClass() ?>"><span id="elh_t201_users_Address" class="t201_users_Address"><?php echo $t201_users_delete->Address->caption() ?></span></th>
-<?php } ?>
-<?php if ($t201_users_delete->City->Visible) { // City ?>
-		<th class="<?php echo $t201_users_delete->City->headerCellClass() ?>"><span id="elh_t201_users_City" class="t201_users_City"><?php echo $t201_users_delete->City->caption() ?></span></th>
-<?php } ?>
-<?php if ($t201_users_delete->Region->Visible) { // Region ?>
-		<th class="<?php echo $t201_users_delete->Region->headerCellClass() ?>"><span id="elh_t201_users_Region" class="t201_users_Region"><?php echo $t201_users_delete->Region->caption() ?></span></th>
-<?php } ?>
-<?php if ($t201_users_delete->PostalCode->Visible) { // PostalCode ?>
-		<th class="<?php echo $t201_users_delete->PostalCode->headerCellClass() ?>"><span id="elh_t201_users_PostalCode" class="t201_users_PostalCode"><?php echo $t201_users_delete->PostalCode->caption() ?></span></th>
-<?php } ?>
-<?php if ($t201_users_delete->Country->Visible) { // Country ?>
-		<th class="<?php echo $t201_users_delete->Country->headerCellClass() ?>"><span id="elh_t201_users_Country" class="t201_users_Country"><?php echo $t201_users_delete->Country->caption() ?></span></th>
-<?php } ?>
-<?php if ($t201_users_delete->HomePhone->Visible) { // HomePhone ?>
-		<th class="<?php echo $t201_users_delete->HomePhone->headerCellClass() ?>"><span id="elh_t201_users_HomePhone" class="t201_users_HomePhone"><?php echo $t201_users_delete->HomePhone->caption() ?></span></th>
-<?php } ?>
-<?php if ($t201_users_delete->Extension->Visible) { // Extension ?>
-		<th class="<?php echo $t201_users_delete->Extension->headerCellClass() ?>"><span id="elh_t201_users_Extension" class="t201_users_Extension"><?php echo $t201_users_delete->Extension->caption() ?></span></th>
-<?php } ?>
-<?php if ($t201_users_delete->_Email->Visible) { // Email ?>
-		<th class="<?php echo $t201_users_delete->_Email->headerCellClass() ?>"><span id="elh_t201_users__Email" class="t201_users__Email"><?php echo $t201_users_delete->_Email->caption() ?></span></th>
-<?php } ?>
-<?php if ($t201_users_delete->Photo->Visible) { // Photo ?>
-		<th class="<?php echo $t201_users_delete->Photo->headerCellClass() ?>"><span id="elh_t201_users_Photo" class="t201_users_Photo"><?php echo $t201_users_delete->Photo->caption() ?></span></th>
-<?php } ?>
-<?php if ($t201_users_delete->ReportsTo->Visible) { // ReportsTo ?>
-		<th class="<?php echo $t201_users_delete->ReportsTo->headerCellClass() ?>"><span id="elh_t201_users_ReportsTo" class="t201_users_ReportsTo"><?php echo $t201_users_delete->ReportsTo->caption() ?></span></th>
-<?php } ?>
-<?php if ($t201_users_delete->Password->Visible) { // Password ?>
-		<th class="<?php echo $t201_users_delete->Password->headerCellClass() ?>"><span id="elh_t201_users_Password" class="t201_users_Password"><?php echo $t201_users_delete->Password->caption() ?></span></th>
-<?php } ?>
 <?php if ($t201_users_delete->UserLevel->Visible) { // UserLevel ?>
 		<th class="<?php echo $t201_users_delete->UserLevel->headerCellClass() ?>"><span id="elh_t201_users_UserLevel" class="t201_users_UserLevel"><?php echo $t201_users_delete->UserLevel->caption() ?></span></th>
 <?php } ?>
 <?php if ($t201_users_delete->Username->Visible) { // Username ?>
 		<th class="<?php echo $t201_users_delete->Username->headerCellClass() ?>"><span id="elh_t201_users_Username" class="t201_users_Username"><?php echo $t201_users_delete->Username->caption() ?></span></th>
 <?php } ?>
-<?php if ($t201_users_delete->Activated->Visible) { // Activated ?>
-		<th class="<?php echo $t201_users_delete->Activated->headerCellClass() ?>"><span id="elh_t201_users_Activated" class="t201_users_Activated"><?php echo $t201_users_delete->Activated->caption() ?></span></th>
-<?php } ?>
 <?php if ($t201_users_delete->sekolah_id->Visible) { // sekolah_id ?>
 		<th class="<?php echo $t201_users_delete->sekolah_id->headerCellClass() ?>"><span id="elh_t201_users_sekolah_id" class="t201_users_sekolah_id"><?php echo $t201_users_delete->sekolah_id->caption() ?></span></th>
+<?php } ?>
+<?php if ($t201_users_delete->tahunajaran_id->Visible) { // tahunajaran_id ?>
+		<th class="<?php echo $t201_users_delete->tahunajaran_id->headerCellClass() ?>"><span id="elh_t201_users_tahunajaran_id" class="t201_users_tahunajaran_id"><?php echo $t201_users_delete->tahunajaran_id->caption() ?></span></th>
+<?php } ?>
+<?php if ($t201_users_delete->kelas_id->Visible) { // kelas_id ?>
+		<th class="<?php echo $t201_users_delete->kelas_id->headerCellClass() ?>"><span id="elh_t201_users_kelas_id" class="t201_users_kelas_id"><?php echo $t201_users_delete->kelas_id->caption() ?></span></th>
+<?php } ?>
+<?php if ($t201_users_delete->semester_id->Visible) { // semester_id ?>
+		<th class="<?php echo $t201_users_delete->semester_id->headerCellClass() ?>"><span id="elh_t201_users_semester_id" class="t201_users_semester_id"><?php echo $t201_users_delete->semester_id->caption() ?></span></th>
 <?php } ?>
 	</tr>
 	</thead>
@@ -154,125 +109,6 @@ while (!$t201_users_delete->Recordset->EOF) {
 	$t201_users_delete->renderRow();
 ?>
 	<tr <?php echo $t201_users->rowAttributes() ?>>
-<?php if ($t201_users_delete->LastName->Visible) { // LastName ?>
-		<td <?php echo $t201_users_delete->LastName->cellAttributes() ?>>
-<span id="el<?php echo $t201_users_delete->RowCount ?>_t201_users_LastName" class="t201_users_LastName">
-<span<?php echo $t201_users_delete->LastName->viewAttributes() ?>><?php echo $t201_users_delete->LastName->getViewValue() ?></span>
-</span>
-</td>
-<?php } ?>
-<?php if ($t201_users_delete->FirstName->Visible) { // FirstName ?>
-		<td <?php echo $t201_users_delete->FirstName->cellAttributes() ?>>
-<span id="el<?php echo $t201_users_delete->RowCount ?>_t201_users_FirstName" class="t201_users_FirstName">
-<span<?php echo $t201_users_delete->FirstName->viewAttributes() ?>><?php echo $t201_users_delete->FirstName->getViewValue() ?></span>
-</span>
-</td>
-<?php } ?>
-<?php if ($t201_users_delete->Title->Visible) { // Title ?>
-		<td <?php echo $t201_users_delete->Title->cellAttributes() ?>>
-<span id="el<?php echo $t201_users_delete->RowCount ?>_t201_users_Title" class="t201_users_Title">
-<span<?php echo $t201_users_delete->Title->viewAttributes() ?>><?php echo $t201_users_delete->Title->getViewValue() ?></span>
-</span>
-</td>
-<?php } ?>
-<?php if ($t201_users_delete->TitleOfCourtesy->Visible) { // TitleOfCourtesy ?>
-		<td <?php echo $t201_users_delete->TitleOfCourtesy->cellAttributes() ?>>
-<span id="el<?php echo $t201_users_delete->RowCount ?>_t201_users_TitleOfCourtesy" class="t201_users_TitleOfCourtesy">
-<span<?php echo $t201_users_delete->TitleOfCourtesy->viewAttributes() ?>><?php echo $t201_users_delete->TitleOfCourtesy->getViewValue() ?></span>
-</span>
-</td>
-<?php } ?>
-<?php if ($t201_users_delete->BirthDate->Visible) { // BirthDate ?>
-		<td <?php echo $t201_users_delete->BirthDate->cellAttributes() ?>>
-<span id="el<?php echo $t201_users_delete->RowCount ?>_t201_users_BirthDate" class="t201_users_BirthDate">
-<span<?php echo $t201_users_delete->BirthDate->viewAttributes() ?>><?php echo $t201_users_delete->BirthDate->getViewValue() ?></span>
-</span>
-</td>
-<?php } ?>
-<?php if ($t201_users_delete->HireDate->Visible) { // HireDate ?>
-		<td <?php echo $t201_users_delete->HireDate->cellAttributes() ?>>
-<span id="el<?php echo $t201_users_delete->RowCount ?>_t201_users_HireDate" class="t201_users_HireDate">
-<span<?php echo $t201_users_delete->HireDate->viewAttributes() ?>><?php echo $t201_users_delete->HireDate->getViewValue() ?></span>
-</span>
-</td>
-<?php } ?>
-<?php if ($t201_users_delete->Address->Visible) { // Address ?>
-		<td <?php echo $t201_users_delete->Address->cellAttributes() ?>>
-<span id="el<?php echo $t201_users_delete->RowCount ?>_t201_users_Address" class="t201_users_Address">
-<span<?php echo $t201_users_delete->Address->viewAttributes() ?>><?php echo $t201_users_delete->Address->getViewValue() ?></span>
-</span>
-</td>
-<?php } ?>
-<?php if ($t201_users_delete->City->Visible) { // City ?>
-		<td <?php echo $t201_users_delete->City->cellAttributes() ?>>
-<span id="el<?php echo $t201_users_delete->RowCount ?>_t201_users_City" class="t201_users_City">
-<span<?php echo $t201_users_delete->City->viewAttributes() ?>><?php echo $t201_users_delete->City->getViewValue() ?></span>
-</span>
-</td>
-<?php } ?>
-<?php if ($t201_users_delete->Region->Visible) { // Region ?>
-		<td <?php echo $t201_users_delete->Region->cellAttributes() ?>>
-<span id="el<?php echo $t201_users_delete->RowCount ?>_t201_users_Region" class="t201_users_Region">
-<span<?php echo $t201_users_delete->Region->viewAttributes() ?>><?php echo $t201_users_delete->Region->getViewValue() ?></span>
-</span>
-</td>
-<?php } ?>
-<?php if ($t201_users_delete->PostalCode->Visible) { // PostalCode ?>
-		<td <?php echo $t201_users_delete->PostalCode->cellAttributes() ?>>
-<span id="el<?php echo $t201_users_delete->RowCount ?>_t201_users_PostalCode" class="t201_users_PostalCode">
-<span<?php echo $t201_users_delete->PostalCode->viewAttributes() ?>><?php echo $t201_users_delete->PostalCode->getViewValue() ?></span>
-</span>
-</td>
-<?php } ?>
-<?php if ($t201_users_delete->Country->Visible) { // Country ?>
-		<td <?php echo $t201_users_delete->Country->cellAttributes() ?>>
-<span id="el<?php echo $t201_users_delete->RowCount ?>_t201_users_Country" class="t201_users_Country">
-<span<?php echo $t201_users_delete->Country->viewAttributes() ?>><?php echo $t201_users_delete->Country->getViewValue() ?></span>
-</span>
-</td>
-<?php } ?>
-<?php if ($t201_users_delete->HomePhone->Visible) { // HomePhone ?>
-		<td <?php echo $t201_users_delete->HomePhone->cellAttributes() ?>>
-<span id="el<?php echo $t201_users_delete->RowCount ?>_t201_users_HomePhone" class="t201_users_HomePhone">
-<span<?php echo $t201_users_delete->HomePhone->viewAttributes() ?>><?php echo $t201_users_delete->HomePhone->getViewValue() ?></span>
-</span>
-</td>
-<?php } ?>
-<?php if ($t201_users_delete->Extension->Visible) { // Extension ?>
-		<td <?php echo $t201_users_delete->Extension->cellAttributes() ?>>
-<span id="el<?php echo $t201_users_delete->RowCount ?>_t201_users_Extension" class="t201_users_Extension">
-<span<?php echo $t201_users_delete->Extension->viewAttributes() ?>><?php echo $t201_users_delete->Extension->getViewValue() ?></span>
-</span>
-</td>
-<?php } ?>
-<?php if ($t201_users_delete->_Email->Visible) { // Email ?>
-		<td <?php echo $t201_users_delete->_Email->cellAttributes() ?>>
-<span id="el<?php echo $t201_users_delete->RowCount ?>_t201_users__Email" class="t201_users__Email">
-<span<?php echo $t201_users_delete->_Email->viewAttributes() ?>><?php echo $t201_users_delete->_Email->getViewValue() ?></span>
-</span>
-</td>
-<?php } ?>
-<?php if ($t201_users_delete->Photo->Visible) { // Photo ?>
-		<td <?php echo $t201_users_delete->Photo->cellAttributes() ?>>
-<span id="el<?php echo $t201_users_delete->RowCount ?>_t201_users_Photo" class="t201_users_Photo">
-<span<?php echo $t201_users_delete->Photo->viewAttributes() ?>><?php echo $t201_users_delete->Photo->getViewValue() ?></span>
-</span>
-</td>
-<?php } ?>
-<?php if ($t201_users_delete->ReportsTo->Visible) { // ReportsTo ?>
-		<td <?php echo $t201_users_delete->ReportsTo->cellAttributes() ?>>
-<span id="el<?php echo $t201_users_delete->RowCount ?>_t201_users_ReportsTo" class="t201_users_ReportsTo">
-<span<?php echo $t201_users_delete->ReportsTo->viewAttributes() ?>><?php echo $t201_users_delete->ReportsTo->getViewValue() ?></span>
-</span>
-</td>
-<?php } ?>
-<?php if ($t201_users_delete->Password->Visible) { // Password ?>
-		<td <?php echo $t201_users_delete->Password->cellAttributes() ?>>
-<span id="el<?php echo $t201_users_delete->RowCount ?>_t201_users_Password" class="t201_users_Password">
-<span<?php echo $t201_users_delete->Password->viewAttributes() ?>><?php echo $t201_users_delete->Password->getViewValue() ?></span>
-</span>
-</td>
-<?php } ?>
 <?php if ($t201_users_delete->UserLevel->Visible) { // UserLevel ?>
 		<td <?php echo $t201_users_delete->UserLevel->cellAttributes() ?>>
 <span id="el<?php echo $t201_users_delete->RowCount ?>_t201_users_UserLevel" class="t201_users_UserLevel">
@@ -287,17 +123,31 @@ while (!$t201_users_delete->Recordset->EOF) {
 </span>
 </td>
 <?php } ?>
-<?php if ($t201_users_delete->Activated->Visible) { // Activated ?>
-		<td <?php echo $t201_users_delete->Activated->cellAttributes() ?>>
-<span id="el<?php echo $t201_users_delete->RowCount ?>_t201_users_Activated" class="t201_users_Activated">
-<span<?php echo $t201_users_delete->Activated->viewAttributes() ?>><div class="custom-control custom-checkbox d-inline-block"><input type="checkbox" id="x_Activated" class="custom-control-input" value="<?php echo $t201_users_delete->Activated->getViewValue() ?>" disabled<?php if (ConvertToBool($t201_users_delete->Activated->CurrentValue)) { ?> checked<?php } ?>><label class="custom-control-label" for="x_Activated"></label></div></span>
-</span>
-</td>
-<?php } ?>
 <?php if ($t201_users_delete->sekolah_id->Visible) { // sekolah_id ?>
 		<td <?php echo $t201_users_delete->sekolah_id->cellAttributes() ?>>
 <span id="el<?php echo $t201_users_delete->RowCount ?>_t201_users_sekolah_id" class="t201_users_sekolah_id">
 <span<?php echo $t201_users_delete->sekolah_id->viewAttributes() ?>><?php echo $t201_users_delete->sekolah_id->getViewValue() ?></span>
+</span>
+</td>
+<?php } ?>
+<?php if ($t201_users_delete->tahunajaran_id->Visible) { // tahunajaran_id ?>
+		<td <?php echo $t201_users_delete->tahunajaran_id->cellAttributes() ?>>
+<span id="el<?php echo $t201_users_delete->RowCount ?>_t201_users_tahunajaran_id" class="t201_users_tahunajaran_id">
+<span<?php echo $t201_users_delete->tahunajaran_id->viewAttributes() ?>><?php echo $t201_users_delete->tahunajaran_id->getViewValue() ?></span>
+</span>
+</td>
+<?php } ?>
+<?php if ($t201_users_delete->kelas_id->Visible) { // kelas_id ?>
+		<td <?php echo $t201_users_delete->kelas_id->cellAttributes() ?>>
+<span id="el<?php echo $t201_users_delete->RowCount ?>_t201_users_kelas_id" class="t201_users_kelas_id">
+<span<?php echo $t201_users_delete->kelas_id->viewAttributes() ?>><?php echo $t201_users_delete->kelas_id->getViewValue() ?></span>
+</span>
+</td>
+<?php } ?>
+<?php if ($t201_users_delete->semester_id->Visible) { // semester_id ?>
+		<td <?php echo $t201_users_delete->semester_id->cellAttributes() ?>>
+<span id="el<?php echo $t201_users_delete->RowCount ?>_t201_users_semester_id" class="t201_users_semester_id">
+<span<?php echo $t201_users_delete->semester_id->viewAttributes() ?>><?php echo $t201_users_delete->semester_id->getViewValue() ?></span>
 </span>
 </td>
 <?php } ?>

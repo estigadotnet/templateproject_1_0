@@ -4,7 +4,7 @@ namespace PHPMaker2020\templateproject_1_0;
 /**
  * Page class
  */
-class t201_users_view extends t201_users
+class t003_kelas_view extends t003_kelas
 {
 
 	// Page ID
@@ -14,10 +14,10 @@ class t201_users_view extends t201_users
 	public $ProjectID = "{1AF74738-C327-4FF8-8DF7-23D913E26545}";
 
 	// Table name
-	public $TableName = 't201_users';
+	public $TableName = 't003_kelas';
 
 	// Page object name
-	public $PageObjName = "t201_users_view";
+	public $PageObjName = "t003_kelas_view";
 
 	// Page URLs
 	public $AddUrl;
@@ -373,15 +373,15 @@ class t201_users_view extends t201_users
 		// Parent constuctor
 		parent::__construct();
 
-		// Table object (t201_users)
-		if (!isset($GLOBALS["t201_users"]) || get_class($GLOBALS["t201_users"]) == PROJECT_NAMESPACE . "t201_users") {
-			$GLOBALS["t201_users"] = &$this;
-			$GLOBALS["Table"] = &$GLOBALS["t201_users"];
+		// Table object (t003_kelas)
+		if (!isset($GLOBALS["t003_kelas"]) || get_class($GLOBALS["t003_kelas"]) == PROJECT_NAMESPACE . "t003_kelas") {
+			$GLOBALS["t003_kelas"] = &$this;
+			$GLOBALS["Table"] = &$GLOBALS["t003_kelas"];
 		}
 		$keyUrl = "";
-		if (Get("EmployeeID") !== NULL) {
-			$this->RecKey["EmployeeID"] = Get("EmployeeID");
-			$keyUrl .= "&amp;EmployeeID=" . urlencode($this->RecKey["EmployeeID"]);
+		if (Get("id") !== NULL) {
+			$this->RecKey["id"] = Get("id");
+			$keyUrl .= "&amp;id=" . urlencode($this->RecKey["id"]);
 		}
 		$this->ExportPrintUrl = $this->pageUrl() . "export=print" . $keyUrl;
 		$this->ExportHtmlUrl = $this->pageUrl() . "export=html" . $keyUrl;
@@ -391,13 +391,17 @@ class t201_users_view extends t201_users
 		$this->ExportCsvUrl = $this->pageUrl() . "export=csv" . $keyUrl;
 		$this->ExportPdfUrl = $this->pageUrl() . "export=pdf" . $keyUrl;
 
+		// Table object (t201_users)
+		if (!isset($GLOBALS['t201_users']))
+			$GLOBALS['t201_users'] = new t201_users();
+
 		// Page ID (for backward compatibility only)
 		if (!defined(PROJECT_NAMESPACE . "PAGE_ID"))
 			define(PROJECT_NAMESPACE . "PAGE_ID", 'view');
 
 		// Table name (for backward compatibility only)
 		if (!defined(PROJECT_NAMESPACE . "TABLE_NAME"))
-			define(PROJECT_NAMESPACE . "TABLE_NAME", 't201_users');
+			define(PROJECT_NAMESPACE . "TABLE_NAME", 't003_kelas');
 
 		// Start timer
 		if (!isset($GLOBALS["DebugTimer"]))
@@ -438,14 +442,14 @@ class t201_users_view extends t201_users
 		Page_Unloaded();
 
 		// Export
-		global $t201_users;
+		global $t003_kelas;
 		if ($this->CustomExport && $this->CustomExport == $this->Export && array_key_exists($this->CustomExport, Config("EXPORT_CLASSES"))) {
 				$content = ob_get_contents();
 			if ($ExportFileName == "")
 				$ExportFileName = $this->TableVar;
 			$class = PROJECT_NAMESPACE . Config("EXPORT_CLASSES." . $this->CustomExport);
 			if (class_exists($class)) {
-				$doc = new $class($t201_users);
+				$doc = new $class($t003_kelas);
 				$doc->Text = @$content;
 				if ($this->isExport("email"))
 					echo $this->exportEmail($doc->Text);
@@ -480,7 +484,7 @@ class t201_users_view extends t201_users
 				$pageName = GetPageName($url);
 				if ($pageName != $this->getListUrl()) { // Not List page
 					$row["caption"] = $this->getModalCaption($pageName);
-					if ($pageName == "t201_usersview.php")
+					if ($pageName == "t003_kelasview.php")
 						$row["view"] = "1";
 				} else { // List page should not be shown as modal => error
 					$row["error"] = $this->getFailureMessage();
@@ -565,7 +569,7 @@ class t201_users_view extends t201_users
 	{
 		$key = "";
 		if (is_array($ar)) {
-			$key .= @$ar['EmployeeID'];
+			$key .= @$ar['id'];
 		}
 		return $key;
 	}
@@ -578,7 +582,7 @@ class t201_users_view extends t201_users
 	protected function hideFieldsForAddEdit()
 	{
 		if ($this->isAdd() || $this->isCopy() || $this->isGridAdd())
-			$this->EmployeeID->Visible = FALSE;
+			$this->id->Visible = FALSE;
 	}
 
 	// Lookup data
@@ -682,7 +686,6 @@ class t201_users_view extends t201_users
 	public $RecordRange = 10;
 	public $RecKey = [];
 	public $IsModal = FALSE;
-	public $MultiPages; // Multi pages object
 
 	//
 	// Page run
@@ -713,7 +716,7 @@ class t201_users_view extends t201_users
 				$Security->saveLastUrl();
 				$this->setFailureMessage(DeniedMessage()); // Set no permission
 				if ($Security->canList())
-					$this->terminate(GetUrl("t201_userslist.php"));
+					$this->terminate(GetUrl("t003_kelaslist.php"));
 				else
 					$this->terminate(GetUrl("login.php"));
 				return;
@@ -722,48 +725,15 @@ class t201_users_view extends t201_users
 				$Security->UserID_Loading();
 				$Security->loadUserID();
 				$Security->UserID_Loaded();
-				if (strval($Security->currentUserID()) == "") {
-					$this->setFailureMessage(DeniedMessage()); // Set no permission
-					$this->terminate(GetUrl("t201_userslist.php"));
-					return;
-				}
 			}
 		}
 		$this->CurrentAction = Param("action"); // Set up current action
-		$this->EmployeeID->setVisibility();
-		$this->LastName->setVisibility();
-		$this->FirstName->setVisibility();
-		$this->Title->setVisibility();
-		$this->TitleOfCourtesy->setVisibility();
-		$this->BirthDate->setVisibility();
-		$this->HireDate->setVisibility();
-		$this->Address->setVisibility();
-		$this->City->setVisibility();
-		$this->Region->setVisibility();
-		$this->PostalCode->setVisibility();
-		$this->Country->setVisibility();
-		$this->HomePhone->setVisibility();
-		$this->Extension->setVisibility();
-		$this->_Email->setVisibility();
-		$this->Photo->setVisibility();
-		$this->Notes->setVisibility();
-		$this->ReportsTo->setVisibility();
-		$this->Password->setVisibility();
-		$this->UserLevel->setVisibility();
-		$this->Username->setVisibility();
-		$this->Activated->setVisibility();
-		$this->Profile->setVisibility();
-		$this->sekolah_id->setVisibility();
-		$this->tahunajaran_id->setVisibility();
-		$this->kelas_id->setVisibility();
-		$this->semester_id->setVisibility();
+		$this->id->setVisibility();
+		$this->Kelas->setVisibility();
 		$this->hideFieldsForAddEdit();
 
 		// Do not use lookup cache
 		$this->setUseLookupCache(FALSE);
-
-		// Set up multi page object
-		$this->setupMultiPages();
 
 		// Global Page Loading event (in userfn*.php)
 		Page_Loading();
@@ -781,16 +751,11 @@ class t201_users_view extends t201_users
 		$this->createToken();
 
 		// Set up lookup cache
-		$this->setupLookupOptions($this->UserLevel);
-		$this->setupLookupOptions($this->sekolah_id);
-		$this->setupLookupOptions($this->tahunajaran_id);
-		$this->setupLookupOptions($this->kelas_id);
-		$this->setupLookupOptions($this->semester_id);
-
 		// Check permission
+
 		if (!$Security->canView()) {
 			$this->setFailureMessage(DeniedMessage()); // No permission
-			$this->terminate("t201_userslist.php");
+			$this->terminate("t003_kelaslist.php");
 			return;
 		}
 
@@ -803,20 +768,20 @@ class t201_users_view extends t201_users
 		$returnUrl = "";
 		$matchRecord = FALSE;
 		if ($this->isPageRequest()) { // Validate request
-			if (Get("EmployeeID") !== NULL) {
-				$this->EmployeeID->setQueryStringValue(Get("EmployeeID"));
-				$this->RecKey["EmployeeID"] = $this->EmployeeID->QueryStringValue;
+			if (Get("id") !== NULL) {
+				$this->id->setQueryStringValue(Get("id"));
+				$this->RecKey["id"] = $this->id->QueryStringValue;
 			} elseif (IsApi() && Key(0) !== NULL) {
-				$this->EmployeeID->setQueryStringValue(Key(0));
-				$this->RecKey["EmployeeID"] = $this->EmployeeID->QueryStringValue;
-			} elseif (Post("EmployeeID") !== NULL) {
-				$this->EmployeeID->setFormValue(Post("EmployeeID"));
-				$this->RecKey["EmployeeID"] = $this->EmployeeID->FormValue;
+				$this->id->setQueryStringValue(Key(0));
+				$this->RecKey["id"] = $this->id->QueryStringValue;
+			} elseif (Post("id") !== NULL) {
+				$this->id->setFormValue(Post("id"));
+				$this->RecKey["id"] = $this->id->FormValue;
 			} elseif (IsApi() && Route(2) !== NULL) {
-				$this->EmployeeID->setFormValue(Route(2));
-				$this->RecKey["EmployeeID"] = $this->EmployeeID->FormValue;
+				$this->id->setFormValue(Route(2));
+				$this->RecKey["id"] = $this->id->FormValue;
 			} else {
-				$returnUrl = "t201_userslist.php"; // Return to list
+				$returnUrl = "t003_kelaslist.php"; // Return to list
 			}
 
 			// Get action
@@ -838,11 +803,11 @@ class t201_users_view extends t201_users
 					if (!$res) { // Load record based on key
 						if ($this->getSuccessMessage() == "" && $this->getFailureMessage() == "")
 							$this->setFailureMessage($Language->phrase("NoRecord")); // Set no record message
-						$returnUrl = "t201_userslist.php"; // No matching record, return to list
+						$returnUrl = "t003_kelaslist.php"; // No matching record, return to list
 					}
 			}
 		} else {
-			$returnUrl = "t201_userslist.php"; // Not page request, return to list
+			$returnUrl = "t003_kelaslist.php"; // Not page request, return to list
 		}
 		if ($returnUrl != "") {
 			$this->terminate($returnUrl);
@@ -890,7 +855,7 @@ class t201_users_view extends t201_users
 			$item->Body = "<a class=\"ew-action ew-edit\" title=\"" . $editcaption . "\" data-caption=\"" . $editcaption . "\" href=\"#\" onclick=\"return ew.modalDialogShow({lnk:this,url:'" . HtmlEncode($this->EditUrl) . "'});\">" . $Language->phrase("ViewPageEditLink") . "</a>";
 		else
 			$item->Body = "<a class=\"ew-action ew-edit\" title=\"" . $editcaption . "\" data-caption=\"" . $editcaption . "\" href=\"" . HtmlEncode($this->EditUrl) . "\">" . $Language->phrase("ViewPageEditLink") . "</a>";
-		$item->Visible = ($this->EditUrl != "" && $Security->canEdit()&& $this->showOptionLink('edit'));
+		$item->Visible = ($this->EditUrl != "" && $Security->canEdit());
 
 		// Copy
 		$item = &$option->add("copy");
@@ -899,7 +864,7 @@ class t201_users_view extends t201_users
 			$item->Body = "<a class=\"ew-action ew-copy\" title=\"" . $copycaption . "\" data-caption=\"" . $copycaption . "\" href=\"#\" onclick=\"return ew.modalDialogShow({lnk:this,btn:'AddBtn',url:'" . HtmlEncode($this->CopyUrl) . "'});\">" . $Language->phrase("ViewPageCopyLink") . "</a>";
 		else
 			$item->Body = "<a class=\"ew-action ew-copy\" title=\"" . $copycaption . "\" data-caption=\"" . $copycaption . "\" href=\"" . HtmlEncode($this->CopyUrl) . "\">" . $Language->phrase("ViewPageCopyLink") . "</a>";
-		$item->Visible = ($this->CopyUrl != "" && $Security->canAdd() && $this->showOptionLink('add'));
+		$item->Visible = ($this->CopyUrl != "" && $Security->canAdd());
 
 		// Delete
 		$item = &$option->add("delete");
@@ -907,7 +872,7 @@ class t201_users_view extends t201_users
 			$item->Body = "<a onclick=\"return ew.confirmDelete(this);\" class=\"ew-action ew-delete\" title=\"" . HtmlTitle($Language->phrase("ViewPageDeleteLink")) . "\" data-caption=\"" . HtmlTitle($Language->phrase("ViewPageDeleteLink")) . "\" href=\"" . HtmlEncode(UrlAddQuery($this->DeleteUrl, "action=1")) . "\">" . $Language->phrase("ViewPageDeleteLink") . "</a>";
 		else
 			$item->Body = "<a class=\"ew-action ew-delete\" title=\"" . HtmlTitle($Language->phrase("ViewPageDeleteLink")) . "\" data-caption=\"" . HtmlTitle($Language->phrase("ViewPageDeleteLink")) . "\" href=\"" . HtmlEncode($this->DeleteUrl) . "\">" . $Language->phrase("ViewPageDeleteLink") . "</a>";
-		$item->Visible = ($this->DeleteUrl != "" && $Security->canDelete() && $this->showOptionLink('delete'));
+		$item->Visible = ($this->DeleteUrl != "" && $Security->canDelete());
 
 		// Set up action default
 		$option = $options["action"];
@@ -954,66 +919,16 @@ class t201_users_view extends t201_users
 		$this->Row_Selected($row);
 		if (!$rs || $rs->EOF)
 			return;
-		$this->EmployeeID->setDbValue($row['EmployeeID']);
-		$this->LastName->setDbValue($row['LastName']);
-		$this->FirstName->setDbValue($row['FirstName']);
-		$this->Title->setDbValue($row['Title']);
-		$this->TitleOfCourtesy->setDbValue($row['TitleOfCourtesy']);
-		$this->BirthDate->setDbValue($row['BirthDate']);
-		$this->HireDate->setDbValue($row['HireDate']);
-		$this->Address->setDbValue($row['Address']);
-		$this->City->setDbValue($row['City']);
-		$this->Region->setDbValue($row['Region']);
-		$this->PostalCode->setDbValue($row['PostalCode']);
-		$this->Country->setDbValue($row['Country']);
-		$this->HomePhone->setDbValue($row['HomePhone']);
-		$this->Extension->setDbValue($row['Extension']);
-		$this->_Email->setDbValue($row['Email']);
-		$this->Photo->setDbValue($row['Photo']);
-		$this->Notes->setDbValue($row['Notes']);
-		$this->ReportsTo->setDbValue($row['ReportsTo']);
-		$this->Password->setDbValue($row['Password']);
-		$this->UserLevel->setDbValue($row['UserLevel']);
-		$this->Username->setDbValue($row['Username']);
-		$this->Activated->setDbValue($row['Activated']);
-		$this->Profile->setDbValue($row['Profile']);
-		$this->sekolah_id->setDbValue($row['sekolah_id']);
-		$this->tahunajaran_id->setDbValue($row['tahunajaran_id']);
-		$this->kelas_id->setDbValue($row['kelas_id']);
-		$this->semester_id->setDbValue($row['semester_id']);
+		$this->id->setDbValue($row['id']);
+		$this->Kelas->setDbValue($row['Kelas']);
 	}
 
 	// Return a row with default values
 	protected function newRow()
 	{
 		$row = [];
-		$row['EmployeeID'] = NULL;
-		$row['LastName'] = NULL;
-		$row['FirstName'] = NULL;
-		$row['Title'] = NULL;
-		$row['TitleOfCourtesy'] = NULL;
-		$row['BirthDate'] = NULL;
-		$row['HireDate'] = NULL;
-		$row['Address'] = NULL;
-		$row['City'] = NULL;
-		$row['Region'] = NULL;
-		$row['PostalCode'] = NULL;
-		$row['Country'] = NULL;
-		$row['HomePhone'] = NULL;
-		$row['Extension'] = NULL;
-		$row['Email'] = NULL;
-		$row['Photo'] = NULL;
-		$row['Notes'] = NULL;
-		$row['ReportsTo'] = NULL;
-		$row['Password'] = NULL;
-		$row['UserLevel'] = NULL;
-		$row['Username'] = NULL;
-		$row['Activated'] = NULL;
-		$row['Profile'] = NULL;
-		$row['sekolah_id'] = NULL;
-		$row['tahunajaran_id'] = NULL;
-		$row['kelas_id'] = NULL;
-		$row['semester_id'] = NULL;
+		$row['id'] = NULL;
+		$row['Kelas'] = NULL;
 		return $row;
 	}
 
@@ -1034,388 +949,28 @@ class t201_users_view extends t201_users
 		$this->Row_Rendering();
 
 		// Common render codes for all row types
-		// EmployeeID
-		// LastName
-		// FirstName
-		// Title
-		// TitleOfCourtesy
-		// BirthDate
-		// HireDate
-		// Address
-		// City
-		// Region
-		// PostalCode
-		// Country
-		// HomePhone
-		// Extension
-		// Email
-		// Photo
-		// Notes
-		// ReportsTo
-		// Password
-		// UserLevel
-		// Username
-		// Activated
-		// Profile
-		// sekolah_id
-		// tahunajaran_id
-		// kelas_id
-		// semester_id
+		// id
+		// Kelas
 
 		if ($this->RowType == ROWTYPE_VIEW) { // View row
 
-			// EmployeeID
-			$this->EmployeeID->ViewValue = $this->EmployeeID->CurrentValue;
-			$this->EmployeeID->ViewCustomAttributes = "";
+			// id
+			$this->id->ViewValue = $this->id->CurrentValue;
+			$this->id->ViewCustomAttributes = "";
 
-			// LastName
-			$this->LastName->ViewValue = $this->LastName->CurrentValue;
-			$this->LastName->ViewCustomAttributes = "";
+			// Kelas
+			$this->Kelas->ViewValue = $this->Kelas->CurrentValue;
+			$this->Kelas->ViewCustomAttributes = "";
 
-			// FirstName
-			$this->FirstName->ViewValue = $this->FirstName->CurrentValue;
-			$this->FirstName->ViewCustomAttributes = "";
-
-			// Title
-			$this->Title->ViewValue = $this->Title->CurrentValue;
-			$this->Title->ViewCustomAttributes = "";
-
-			// TitleOfCourtesy
-			$this->TitleOfCourtesy->ViewValue = $this->TitleOfCourtesy->CurrentValue;
-			$this->TitleOfCourtesy->ViewCustomAttributes = "";
-
-			// BirthDate
-			$this->BirthDate->ViewValue = $this->BirthDate->CurrentValue;
-			$this->BirthDate->ViewValue = FormatDateTime($this->BirthDate->ViewValue, 0);
-			$this->BirthDate->ViewCustomAttributes = "";
-
-			// HireDate
-			$this->HireDate->ViewValue = $this->HireDate->CurrentValue;
-			$this->HireDate->ViewValue = FormatDateTime($this->HireDate->ViewValue, 0);
-			$this->HireDate->ViewCustomAttributes = "";
-
-			// Address
-			$this->Address->ViewValue = $this->Address->CurrentValue;
-			$this->Address->ViewCustomAttributes = "";
-
-			// City
-			$this->City->ViewValue = $this->City->CurrentValue;
-			$this->City->ViewCustomAttributes = "";
-
-			// Region
-			$this->Region->ViewValue = $this->Region->CurrentValue;
-			$this->Region->ViewCustomAttributes = "";
-
-			// PostalCode
-			$this->PostalCode->ViewValue = $this->PostalCode->CurrentValue;
-			$this->PostalCode->ViewCustomAttributes = "";
-
-			// Country
-			$this->Country->ViewValue = $this->Country->CurrentValue;
-			$this->Country->ViewCustomAttributes = "";
-
-			// HomePhone
-			$this->HomePhone->ViewValue = $this->HomePhone->CurrentValue;
-			$this->HomePhone->ViewCustomAttributes = "";
-
-			// Extension
-			$this->Extension->ViewValue = $this->Extension->CurrentValue;
-			$this->Extension->ViewCustomAttributes = "";
-
-			// Email
-			$this->_Email->ViewValue = $this->_Email->CurrentValue;
-			$this->_Email->ViewCustomAttributes = "";
-
-			// Photo
-			$this->Photo->ViewValue = $this->Photo->CurrentValue;
-			$this->Photo->ViewCustomAttributes = "";
-
-			// Notes
-			$this->Notes->ViewValue = $this->Notes->CurrentValue;
-			$this->Notes->ViewCustomAttributes = "";
-
-			// ReportsTo
-			$this->ReportsTo->ViewValue = $this->ReportsTo->CurrentValue;
-			$this->ReportsTo->ViewValue = FormatNumber($this->ReportsTo->ViewValue, 0, -2, -2, -2);
-			$this->ReportsTo->ViewCustomAttributes = "";
-
-			// Password
-			$this->Password->ViewValue = $this->Password->CurrentValue;
-			$this->Password->ViewCustomAttributes = "";
-
-			// UserLevel
-			if ($Security->canAdmin()) { // System admin
-				$curVal = strval($this->UserLevel->CurrentValue);
-				if ($curVal != "") {
-					$this->UserLevel->ViewValue = $this->UserLevel->lookupCacheOption($curVal);
-					if ($this->UserLevel->ViewValue === NULL) { // Lookup from database
-						$filterWrk = "`userlevelid`" . SearchString("=", $curVal, DATATYPE_NUMBER, "");
-						$sqlWrk = $this->UserLevel->Lookup->getSql(FALSE, $filterWrk, '', $this);
-						$rswrk = Conn()->execute($sqlWrk);
-						if ($rswrk && !$rswrk->EOF) { // Lookup values found
-							$arwrk = [];
-							$arwrk[1] = $rswrk->fields('df');
-							$this->UserLevel->ViewValue = $this->UserLevel->displayValue($arwrk);
-							$rswrk->Close();
-						} else {
-							$this->UserLevel->ViewValue = $this->UserLevel->CurrentValue;
-						}
-					}
-				} else {
-					$this->UserLevel->ViewValue = NULL;
-				}
-			} else {
-				$this->UserLevel->ViewValue = $Language->phrase("PasswordMask");
-			}
-			$this->UserLevel->ViewCustomAttributes = "";
-
-			// Username
-			$this->Username->ViewValue = $this->Username->CurrentValue;
-			$this->Username->ViewCustomAttributes = "";
-
-			// Activated
-			if (ConvertToBool($this->Activated->CurrentValue)) {
-				$this->Activated->ViewValue = $this->Activated->tagCaption(1) != "" ? $this->Activated->tagCaption(1) : "Y";
-			} else {
-				$this->Activated->ViewValue = $this->Activated->tagCaption(2) != "" ? $this->Activated->tagCaption(2) : "N";
-			}
-			$this->Activated->ViewCustomAttributes = "";
-
-			// Profile
-			$this->Profile->ViewValue = $this->Profile->CurrentValue;
-			$this->Profile->ViewCustomAttributes = "";
-
-			// sekolah_id
-			$curVal = strval($this->sekolah_id->CurrentValue);
-			if ($curVal != "") {
-				$this->sekolah_id->ViewValue = $this->sekolah_id->lookupCacheOption($curVal);
-				if ($this->sekolah_id->ViewValue === NULL) { // Lookup from database
-					$filterWrk = "`id`" . SearchString("=", $curVal, DATATYPE_NUMBER, "");
-					$sqlWrk = $this->sekolah_id->Lookup->getSql(FALSE, $filterWrk, '', $this);
-					$rswrk = Conn()->execute($sqlWrk);
-					if ($rswrk && !$rswrk->EOF) { // Lookup values found
-						$arwrk = [];
-						$arwrk[1] = $rswrk->fields('df');
-						$this->sekolah_id->ViewValue = $this->sekolah_id->displayValue($arwrk);
-						$rswrk->Close();
-					} else {
-						$this->sekolah_id->ViewValue = $this->sekolah_id->CurrentValue;
-					}
-				}
-			} else {
-				$this->sekolah_id->ViewValue = NULL;
-			}
-			$this->sekolah_id->ViewCustomAttributes = "";
-
-			// tahunajaran_id
-			$curVal = strval($this->tahunajaran_id->CurrentValue);
-			if ($curVal != "") {
-				$this->tahunajaran_id->ViewValue = $this->tahunajaran_id->lookupCacheOption($curVal);
-				if ($this->tahunajaran_id->ViewValue === NULL) { // Lookup from database
-					$filterWrk = "`id`" . SearchString("=", $curVal, DATATYPE_NUMBER, "");
-					$sqlWrk = $this->tahunajaran_id->Lookup->getSql(FALSE, $filterWrk, '', $this);
-					$rswrk = Conn()->execute($sqlWrk);
-					if ($rswrk && !$rswrk->EOF) { // Lookup values found
-						$arwrk = [];
-						$arwrk[1] = $rswrk->fields('df');
-						$this->tahunajaran_id->ViewValue = $this->tahunajaran_id->displayValue($arwrk);
-						$rswrk->Close();
-					} else {
-						$this->tahunajaran_id->ViewValue = $this->tahunajaran_id->CurrentValue;
-					}
-				}
-			} else {
-				$this->tahunajaran_id->ViewValue = NULL;
-			}
-			$this->tahunajaran_id->ViewCustomAttributes = "";
-
-			// kelas_id
-			$curVal = strval($this->kelas_id->CurrentValue);
-			if ($curVal != "") {
-				$this->kelas_id->ViewValue = $this->kelas_id->lookupCacheOption($curVal);
-				if ($this->kelas_id->ViewValue === NULL) { // Lookup from database
-					$filterWrk = "`id`" . SearchString("=", $curVal, DATATYPE_NUMBER, "");
-					$sqlWrk = $this->kelas_id->Lookup->getSql(FALSE, $filterWrk, '', $this);
-					$rswrk = Conn()->execute($sqlWrk);
-					if ($rswrk && !$rswrk->EOF) { // Lookup values found
-						$arwrk = [];
-						$arwrk[1] = $rswrk->fields('df');
-						$this->kelas_id->ViewValue = $this->kelas_id->displayValue($arwrk);
-						$rswrk->Close();
-					} else {
-						$this->kelas_id->ViewValue = $this->kelas_id->CurrentValue;
-					}
-				}
-			} else {
-				$this->kelas_id->ViewValue = NULL;
-			}
-			$this->kelas_id->ViewCustomAttributes = "";
-
-			// semester_id
-			$curVal = strval($this->semester_id->CurrentValue);
-			if ($curVal != "") {
-				$this->semester_id->ViewValue = $this->semester_id->lookupCacheOption($curVal);
-				if ($this->semester_id->ViewValue === NULL) { // Lookup from database
-					$filterWrk = "`id`" . SearchString("=", $curVal, DATATYPE_NUMBER, "");
-					$sqlWrk = $this->semester_id->Lookup->getSql(FALSE, $filterWrk, '', $this);
-					$rswrk = Conn()->execute($sqlWrk);
-					if ($rswrk && !$rswrk->EOF) { // Lookup values found
-						$arwrk = [];
-						$arwrk[1] = $rswrk->fields('df');
-						$this->semester_id->ViewValue = $this->semester_id->displayValue($arwrk);
-						$rswrk->Close();
-					} else {
-						$this->semester_id->ViewValue = $this->semester_id->CurrentValue;
-					}
-				}
-			} else {
-				$this->semester_id->ViewValue = NULL;
-			}
-			$this->semester_id->ViewCustomAttributes = "";
-
-			// LastName
-			$this->LastName->LinkCustomAttributes = "";
-			$this->LastName->HrefValue = "";
-			$this->LastName->TooltipValue = "";
-
-			// FirstName
-			$this->FirstName->LinkCustomAttributes = "";
-			$this->FirstName->HrefValue = "";
-			$this->FirstName->TooltipValue = "";
-
-			// Title
-			$this->Title->LinkCustomAttributes = "";
-			$this->Title->HrefValue = "";
-			$this->Title->TooltipValue = "";
-
-			// TitleOfCourtesy
-			$this->TitleOfCourtesy->LinkCustomAttributes = "";
-			$this->TitleOfCourtesy->HrefValue = "";
-			$this->TitleOfCourtesy->TooltipValue = "";
-
-			// BirthDate
-			$this->BirthDate->LinkCustomAttributes = "";
-			$this->BirthDate->HrefValue = "";
-			$this->BirthDate->TooltipValue = "";
-
-			// HireDate
-			$this->HireDate->LinkCustomAttributes = "";
-			$this->HireDate->HrefValue = "";
-			$this->HireDate->TooltipValue = "";
-
-			// Address
-			$this->Address->LinkCustomAttributes = "";
-			$this->Address->HrefValue = "";
-			$this->Address->TooltipValue = "";
-
-			// City
-			$this->City->LinkCustomAttributes = "";
-			$this->City->HrefValue = "";
-			$this->City->TooltipValue = "";
-
-			// Region
-			$this->Region->LinkCustomAttributes = "";
-			$this->Region->HrefValue = "";
-			$this->Region->TooltipValue = "";
-
-			// PostalCode
-			$this->PostalCode->LinkCustomAttributes = "";
-			$this->PostalCode->HrefValue = "";
-			$this->PostalCode->TooltipValue = "";
-
-			// Country
-			$this->Country->LinkCustomAttributes = "";
-			$this->Country->HrefValue = "";
-			$this->Country->TooltipValue = "";
-
-			// HomePhone
-			$this->HomePhone->LinkCustomAttributes = "";
-			$this->HomePhone->HrefValue = "";
-			$this->HomePhone->TooltipValue = "";
-
-			// Extension
-			$this->Extension->LinkCustomAttributes = "";
-			$this->Extension->HrefValue = "";
-			$this->Extension->TooltipValue = "";
-
-			// Email
-			$this->_Email->LinkCustomAttributes = "";
-			$this->_Email->HrefValue = "";
-			$this->_Email->TooltipValue = "";
-
-			// Photo
-			$this->Photo->LinkCustomAttributes = "";
-			$this->Photo->HrefValue = "";
-			$this->Photo->TooltipValue = "";
-
-			// Notes
-			$this->Notes->LinkCustomAttributes = "";
-			$this->Notes->HrefValue = "";
-			$this->Notes->TooltipValue = "";
-
-			// ReportsTo
-			$this->ReportsTo->LinkCustomAttributes = "";
-			$this->ReportsTo->HrefValue = "";
-			$this->ReportsTo->TooltipValue = "";
-
-			// Password
-			$this->Password->LinkCustomAttributes = "";
-			$this->Password->HrefValue = "";
-			$this->Password->TooltipValue = "";
-
-			// UserLevel
-			$this->UserLevel->LinkCustomAttributes = "";
-			$this->UserLevel->HrefValue = "";
-			$this->UserLevel->TooltipValue = "";
-
-			// Username
-			$this->Username->LinkCustomAttributes = "";
-			$this->Username->HrefValue = "";
-			$this->Username->TooltipValue = "";
-
-			// Activated
-			$this->Activated->LinkCustomAttributes = "";
-			$this->Activated->HrefValue = "";
-			$this->Activated->TooltipValue = "";
-
-			// Profile
-			$this->Profile->LinkCustomAttributes = "";
-			$this->Profile->HrefValue = "";
-			$this->Profile->TooltipValue = "";
-
-			// sekolah_id
-			$this->sekolah_id->LinkCustomAttributes = "";
-			$this->sekolah_id->HrefValue = "";
-			$this->sekolah_id->TooltipValue = "";
-
-			// tahunajaran_id
-			$this->tahunajaran_id->LinkCustomAttributes = "";
-			$this->tahunajaran_id->HrefValue = "";
-			$this->tahunajaran_id->TooltipValue = "";
-
-			// kelas_id
-			$this->kelas_id->LinkCustomAttributes = "";
-			$this->kelas_id->HrefValue = "";
-			$this->kelas_id->TooltipValue = "";
-
-			// semester_id
-			$this->semester_id->LinkCustomAttributes = "";
-			$this->semester_id->HrefValue = "";
-			$this->semester_id->TooltipValue = "";
+			// Kelas
+			$this->Kelas->LinkCustomAttributes = "";
+			$this->Kelas->HrefValue = "";
+			$this->Kelas->TooltipValue = "";
 		}
 
 		// Call Row Rendered event
 		if ($this->RowType != ROWTYPE_AGGREGATEINIT)
 			$this->Row_Rendered();
-	}
-
-	// Show link optionally based on User ID
-	protected function showOptionLink($id = "")
-	{
-		global $Security;
-		if ($Security->isLoggedIn() && !$Security->isAdmin() && !$this->userIDAllow($id))
-			return $Security->isValidUserID($this->EmployeeID->CurrentValue);
-		return TRUE;
 	}
 
 	// Set up Breadcrumb
@@ -1424,20 +979,9 @@ class t201_users_view extends t201_users
 		global $Breadcrumb, $Language;
 		$Breadcrumb = new Breadcrumb();
 		$url = substr(CurrentUrl(), strrpos(CurrentUrl(), "/")+1);
-		$Breadcrumb->add("list", $this->TableVar, $this->addMasterUrl("t201_userslist.php"), "", $this->TableVar, TRUE);
+		$Breadcrumb->add("list", $this->TableVar, $this->addMasterUrl("t003_kelaslist.php"), "", $this->TableVar, TRUE);
 		$pageId = "view";
 		$Breadcrumb->add("view", $pageId, $url);
-	}
-
-	// Set up multi pages
-	protected function setupMultiPages()
-	{
-		$pages = new SubPages();
-		$pages->Style = "tabs";
-		$pages->add(0);
-		$pages->add(1);
-		$pages->add(2);
-		$this->MultiPages = $pages;
 	}
 
 	// Setup lookup options
@@ -1454,18 +998,6 @@ class t201_users_view extends t201_users
 
 			// Set up lookup SQL and connection
 			switch ($fld->FieldVar) {
-				case "x_UserLevel":
-					break;
-				case "x_Activated":
-					break;
-				case "x_sekolah_id":
-					break;
-				case "x_tahunajaran_id":
-					break;
-				case "x_kelas_id":
-					break;
-				case "x_semester_id":
-					break;
 				default:
 					$lookupFilter = "";
 					break;
@@ -1486,16 +1018,6 @@ class t201_users_view extends t201_users
 
 					// Format the field values
 					switch ($fld->FieldVar) {
-						case "x_UserLevel":
-							break;
-						case "x_sekolah_id":
-							break;
-						case "x_tahunajaran_id":
-							break;
-						case "x_kelas_id":
-							break;
-						case "x_semester_id":
-							break;
 					}
 					$ar[strval($row[0])] = $row;
 					$rs->moveNext();

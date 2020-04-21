@@ -118,6 +118,33 @@ while ($r202_users_summary->RecordCount < count($r202_users_summary->DetailRecor
 	</div></div></th>
 	<?php } ?>
 <?php } ?>
+<?php if ($r202_users_summary->tahunajaran_id->Visible) { ?>
+	<?php if ($r202_users_summary->sortUrl($r202_users_summary->tahunajaran_id) == "") { ?>
+	<th data-name="tahunajaran_id" class="<?php echo $r202_users_summary->tahunajaran_id->headerCellClass() ?>"><div class="r202_users_tahunajaran_id"><div class="ew-table-header-caption"><?php echo $r202_users_summary->tahunajaran_id->caption() ?></div></div></th>
+	<?php } else { ?>
+	<th data-name="tahunajaran_id" class="<?php echo $r202_users_summary->tahunajaran_id->headerCellClass() ?>"><div class="ew-pointer" onclick="ew.sort(event, '<?php echo $r202_users_summary->sortUrl($r202_users_summary->tahunajaran_id) ?>', 1);"><div class="r202_users_tahunajaran_id">
+		<div class="ew-table-header-btn"><span class="ew-table-header-caption"><?php echo $r202_users_summary->tahunajaran_id->caption() ?></span><span class="ew-table-header-sort"><?php if ($r202_users_summary->tahunajaran_id->getSort() == "ASC") { ?><i class="fas fa-sort-up"></i><?php } elseif ($r202_users_summary->tahunajaran_id->getSort() == "DESC") { ?><i class="fas fa-sort-down"></i><?php } ?></span></div>
+	</div></div></th>
+	<?php } ?>
+<?php } ?>
+<?php if ($r202_users_summary->kelas_id->Visible) { ?>
+	<?php if ($r202_users_summary->sortUrl($r202_users_summary->kelas_id) == "") { ?>
+	<th data-name="kelas_id" class="<?php echo $r202_users_summary->kelas_id->headerCellClass() ?>"><div class="r202_users_kelas_id"><div class="ew-table-header-caption"><?php echo $r202_users_summary->kelas_id->caption() ?></div></div></th>
+	<?php } else { ?>
+	<th data-name="kelas_id" class="<?php echo $r202_users_summary->kelas_id->headerCellClass() ?>"><div class="ew-pointer" onclick="ew.sort(event, '<?php echo $r202_users_summary->sortUrl($r202_users_summary->kelas_id) ?>', 1);"><div class="r202_users_kelas_id">
+		<div class="ew-table-header-btn"><span class="ew-table-header-caption"><?php echo $r202_users_summary->kelas_id->caption() ?></span><span class="ew-table-header-sort"><?php if ($r202_users_summary->kelas_id->getSort() == "ASC") { ?><i class="fas fa-sort-up"></i><?php } elseif ($r202_users_summary->kelas_id->getSort() == "DESC") { ?><i class="fas fa-sort-down"></i><?php } ?></span></div>
+	</div></div></th>
+	<?php } ?>
+<?php } ?>
+<?php if ($r202_users_summary->semester_id->Visible) { ?>
+	<?php if ($r202_users_summary->sortUrl($r202_users_summary->semester_id) == "") { ?>
+	<th data-name="semester_id" class="<?php echo $r202_users_summary->semester_id->headerCellClass() ?>"><div class="r202_users_semester_id"><div class="ew-table-header-caption"><?php echo $r202_users_summary->semester_id->caption() ?></div></div></th>
+	<?php } else { ?>
+	<th data-name="semester_id" class="<?php echo $r202_users_summary->semester_id->headerCellClass() ?>"><div class="ew-pointer" onclick="ew.sort(event, '<?php echo $r202_users_summary->sortUrl($r202_users_summary->semester_id) ?>', 1);"><div class="r202_users_semester_id">
+		<div class="ew-table-header-btn"><span class="ew-table-header-caption"><?php echo $r202_users_summary->semester_id->caption() ?></span><span class="ew-table-header-sort"><?php if ($r202_users_summary->semester_id->getSort() == "ASC") { ?><i class="fas fa-sort-up"></i><?php } elseif ($r202_users_summary->semester_id->getSort() == "DESC") { ?><i class="fas fa-sort-down"></i><?php } ?></span></div>
+	</div></div></th>
+	<?php } ?>
+<?php } ?>
 	</tr>
 </thead>
 <tbody>
@@ -153,6 +180,21 @@ while ($r202_users_summary->RecordCount < count($r202_users_summary->DetailRecor
 <?php if ($r202_users_summary->sekolah_id->Visible) { ?>
 		<td data-field="sekolah_id"<?php echo $r202_users_summary->sekolah_id->cellAttributes() ?>>
 <span<?php echo $r202_users_summary->sekolah_id->viewAttributes() ?>><?php echo $r202_users_summary->sekolah_id->getViewValue() ?></span>
+</td>
+<?php } ?>
+<?php if ($r202_users_summary->tahunajaran_id->Visible) { ?>
+		<td data-field="tahunajaran_id"<?php echo $r202_users_summary->tahunajaran_id->cellAttributes() ?>>
+<span<?php echo $r202_users_summary->tahunajaran_id->viewAttributes() ?>><?php echo $r202_users_summary->tahunajaran_id->getViewValue() ?></span>
+</td>
+<?php } ?>
+<?php if ($r202_users_summary->kelas_id->Visible) { ?>
+		<td data-field="kelas_id"<?php echo $r202_users_summary->kelas_id->cellAttributes() ?>>
+<span<?php echo $r202_users_summary->kelas_id->viewAttributes() ?>><?php echo $r202_users_summary->kelas_id->getViewValue() ?></span>
+</td>
+<?php } ?>
+<?php if ($r202_users_summary->semester_id->Visible) { ?>
+		<td data-field="semester_id"<?php echo $r202_users_summary->semester_id->cellAttributes() ?>>
+<span<?php echo $r202_users_summary->semester_id->viewAttributes() ?>><?php echo $r202_users_summary->semester_id->getViewValue() ?></span>
 </td>
 <?php } ?>
 	</tr>

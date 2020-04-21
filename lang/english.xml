@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<ew-language date="2020/4/20" version="16.0.1" id="en" name="English" desc="English" author="e.World Technology Ltd.">
+<ew-language date="2020/4/21" version="16.0.1" id="en" name="English" desc="English" author="e.World Technology Ltd.">
   <!-- 
 	*** Important Notes:
 	1. Language ID should follow: https://developers.google.com/recaptcha/docs/language,
@@ -865,6 +865,15 @@
     <menu id="5">
       <phrase id="menutext" value="Sekolah" />
     </menu>
+    <menu id="13">
+      <phrase id="menutext" value="Tahun Ajaran" />
+    </menu>
+    <menu id="14">
+      <phrase id="menutext" value="Kelas" />
+    </menu>
+    <menu id="15">
+      <phrase id="menutext" value="Semester" />
+    </menu>
     <menu id="6">
       <phrase id="menutext" value="Berita" />
     </menu>
@@ -872,7 +881,7 @@
       <phrase id="menutext" value="Lap. Berita" />
     </menu>
     <menu id="12">
-      <phrase id="menutext" value="Lap. Users" />
+      <phrase id="menutext" value="Lap. Pengguna" />
     </menu>
     <menu id="7">
       <phrase id="menutext" value="Utility" />
@@ -905,7 +914,7 @@
       </field>
     </table>
     <table id="r202_users">
-      <phrase id="tblcaption" value="Lap. Users" />
+      <phrase id="tblcaption" value="Lap. Pengguna" />
       <field id="employeeid">
         <phrase id="fldcaption" value="Employee ID" />
       </field>
@@ -982,6 +991,15 @@
       <field id="sekolah_id">
         <phrase id="fldcaption" value="Sekolah" />
       </field>
+      <field id="tahunajaran_id">
+        <phrase id="fldcaption" value="Tahun Ajaran" />
+      </field>
+      <field id="kelas_id">
+        <phrase id="fldcaption" value="Kelas" />
+      </field>
+      <field id="semester_id">
+        <phrase id="fldcaption" value="Semester" />
+      </field>
     </table>
     <table id="t001_sekolah">
       <phrase id="tblcaption" value="Sekolah" />
@@ -993,6 +1011,39 @@
       </field>
       <field id="alamat">
         <phrase id="fldcaption" value="Alamat" />
+      </field>
+    </table>
+    <table id="t002_tahunajaran">
+      <phrase id="tblcaption" value="Tahun Ajaran" />
+      <field id="id">
+        <phrase id="fldcaption" value="id" />
+      </field>
+      <field id="mulai">
+        <phrase id="fldcaption" value="Mulai" />
+      </field>
+      <field id="selesai">
+        <phrase id="fldcaption" value="Selesai" />
+      </field>
+      <field id="tahunajaran">
+        <phrase id="fldcaption" value="Tahun Ajaran" />
+      </field>
+    </table>
+    <table id="t003_kelas">
+      <phrase id="tblcaption" value="Kelas" />
+      <field id="id">
+        <phrase id="fldcaption" value="id" />
+      </field>
+      <field id="kelas">
+        <phrase id="fldcaption" value="Kelas" />
+      </field>
+    </table>
+    <table id="t004_semester">
+      <phrase id="tblcaption" value="Semester" />
+      <field id="id">
+        <phrase id="fldcaption" value="id" />
+      </field>
+      <field id="semester">
+        <phrase id="fldcaption" value="Semester" />
       </field>
     </table>
     <table id="t101_berita">
@@ -1086,6 +1137,15 @@
       </field>
       <field id="sekolah_id">
         <phrase id="fldcaption" value="Sekolah" />
+      </field>
+      <field id="tahunajaran_id">
+        <phrase id="fldcaption" value="Tahun Ajaran" />
+      </field>
+      <field id="kelas_id">
+        <phrase id="fldcaption" value="Kelas" />
+      </field>
+      <field id="semester_id">
+        <phrase id="fldcaption" value="Semester" />
       </field>
     </table>
     <table id="t202_userlevels">

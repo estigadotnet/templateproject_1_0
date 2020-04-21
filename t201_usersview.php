@@ -113,6 +113,36 @@ $t201_users_view->showMessage();
 </td>
 	</tr>
 <?php } ?>
+<?php if ($t201_users_view->tahunajaran_id->Visible) { // tahunajaran_id ?>
+	<tr id="r_tahunajaran_id">
+		<td class="<?php echo $t201_users_view->TableLeftColumnClass ?>"><span id="elh_t201_users_tahunajaran_id"><?php echo $t201_users_view->tahunajaran_id->caption() ?></span></td>
+		<td data-name="tahunajaran_id" <?php echo $t201_users_view->tahunajaran_id->cellAttributes() ?>>
+<span id="el_t201_users_tahunajaran_id" data-page="1">
+<span<?php echo $t201_users_view->tahunajaran_id->viewAttributes() ?>><?php echo $t201_users_view->tahunajaran_id->getViewValue() ?></span>
+</span>
+</td>
+	</tr>
+<?php } ?>
+<?php if ($t201_users_view->kelas_id->Visible) { // kelas_id ?>
+	<tr id="r_kelas_id">
+		<td class="<?php echo $t201_users_view->TableLeftColumnClass ?>"><span id="elh_t201_users_kelas_id"><?php echo $t201_users_view->kelas_id->caption() ?></span></td>
+		<td data-name="kelas_id" <?php echo $t201_users_view->kelas_id->cellAttributes() ?>>
+<span id="el_t201_users_kelas_id" data-page="1">
+<span<?php echo $t201_users_view->kelas_id->viewAttributes() ?>><?php echo $t201_users_view->kelas_id->getViewValue() ?></span>
+</span>
+</td>
+	</tr>
+<?php } ?>
+<?php if ($t201_users_view->semester_id->Visible) { // semester_id ?>
+	<tr id="r_semester_id">
+		<td class="<?php echo $t201_users_view->TableLeftColumnClass ?>"><span id="elh_t201_users_semester_id"><?php echo $t201_users_view->semester_id->caption() ?></span></td>
+		<td data-name="semester_id" <?php echo $t201_users_view->semester_id->cellAttributes() ?>>
+<span id="el_t201_users_semester_id" data-page="1">
+<span<?php echo $t201_users_view->semester_id->viewAttributes() ?>><?php echo $t201_users_view->semester_id->getViewValue() ?></span>
+</span>
+</td>
+	</tr>
+<?php } ?>
 </table>
 <?php if (!$t201_users_view->isExport()) { ?>
 		</div>

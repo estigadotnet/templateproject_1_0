@@ -4,7 +4,7 @@ namespace PHPMaker2020\templateproject_1_0;
 /**
  * Page class
  */
-class t201_users_list extends t201_users
+class t003_kelas_list extends t003_kelas
 {
 
 	// Page ID
@@ -14,13 +14,13 @@ class t201_users_list extends t201_users
 	public $ProjectID = "{1AF74738-C327-4FF8-8DF7-23D913E26545}";
 
 	// Table name
-	public $TableName = 't201_users';
+	public $TableName = 't003_kelas';
 
 	// Page object name
-	public $PageObjName = "t201_users_list";
+	public $PageObjName = "t003_kelas_list";
 
 	// Grid form hidden field names
-	public $FormName = "ft201_userslist";
+	public $FormName = "ft003_kelaslist";
 	public $FormActionName = "k_action";
 	public $FormKeyName = "k_key";
 	public $FormOldKeyName = "k_oldkey";
@@ -381,10 +381,10 @@ class t201_users_list extends t201_users
 		// Parent constuctor
 		parent::__construct();
 
-		// Table object (t201_users)
-		if (!isset($GLOBALS["t201_users"]) || get_class($GLOBALS["t201_users"]) == PROJECT_NAMESPACE . "t201_users") {
-			$GLOBALS["t201_users"] = &$this;
-			$GLOBALS["Table"] = &$GLOBALS["t201_users"];
+		// Table object (t003_kelas)
+		if (!isset($GLOBALS["t003_kelas"]) || get_class($GLOBALS["t003_kelas"]) == PROJECT_NAMESPACE . "t003_kelas") {
+			$GLOBALS["t003_kelas"] = &$this;
+			$GLOBALS["Table"] = &$GLOBALS["t003_kelas"];
 		}
 
 		// Initialize URLs
@@ -395,12 +395,16 @@ class t201_users_list extends t201_users
 		$this->ExportHtmlUrl = $this->pageUrl() . "export=html";
 		$this->ExportXmlUrl = $this->pageUrl() . "export=xml";
 		$this->ExportCsvUrl = $this->pageUrl() . "export=csv";
-		$this->AddUrl = "t201_usersadd.php";
+		$this->AddUrl = "t003_kelasadd.php";
 		$this->InlineAddUrl = $this->pageUrl() . "action=add";
 		$this->GridAddUrl = $this->pageUrl() . "action=gridadd";
 		$this->GridEditUrl = $this->pageUrl() . "action=gridedit";
-		$this->MultiDeleteUrl = "t201_usersdelete.php";
-		$this->MultiUpdateUrl = "t201_usersupdate.php";
+		$this->MultiDeleteUrl = "t003_kelasdelete.php";
+		$this->MultiUpdateUrl = "t003_kelasupdate.php";
+
+		// Table object (t201_users)
+		if (!isset($GLOBALS['t201_users']))
+			$GLOBALS['t201_users'] = new t201_users();
 
 		// Page ID (for backward compatibility only)
 		if (!defined(PROJECT_NAMESPACE . "PAGE_ID"))
@@ -408,7 +412,7 @@ class t201_users_list extends t201_users
 
 		// Table name (for backward compatibility only)
 		if (!defined(PROJECT_NAMESPACE . "TABLE_NAME"))
-			define(PROJECT_NAMESPACE . "TABLE_NAME", 't201_users');
+			define(PROJECT_NAMESPACE . "TABLE_NAME", 't003_kelas');
 
 		// Start timer
 		if (!isset($GLOBALS["DebugTimer"]))
@@ -448,7 +452,7 @@ class t201_users_list extends t201_users
 
 		// Filter options
 		$this->FilterOptions = new ListOptions("div");
-		$this->FilterOptions->TagClassName = "ew-filter-option ft201_userslistsrch";
+		$this->FilterOptions->TagClassName = "ew-filter-option ft003_kelaslistsrch";
 
 		// List actions
 		$this->ListActions = new ListActions();
@@ -466,14 +470,14 @@ class t201_users_list extends t201_users
 		Page_Unloaded();
 
 		// Export
-		global $t201_users;
+		global $t003_kelas;
 		if ($this->CustomExport && $this->CustomExport == $this->Export && array_key_exists($this->CustomExport, Config("EXPORT_CLASSES"))) {
 				$content = ob_get_contents();
 			if ($ExportFileName == "")
 				$ExportFileName = $this->TableVar;
 			$class = PROJECT_NAMESPACE . Config("EXPORT_CLASSES." . $this->CustomExport);
 			if (class_exists($class)) {
-				$doc = new $class($t201_users);
+				$doc = new $class($t003_kelas);
 				$doc->Text = @$content;
 				if ($this->isExport("email"))
 					echo $this->exportEmail($doc->Text);
@@ -577,7 +581,7 @@ class t201_users_list extends t201_users
 	{
 		$key = "";
 		if (is_array($ar)) {
-			$key .= @$ar['EmployeeID'];
+			$key .= @$ar['id'];
 		}
 		return $key;
 	}
@@ -590,7 +594,7 @@ class t201_users_list extends t201_users
 	protected function hideFieldsForAddEdit()
 	{
 		if ($this->isAdd() || $this->isCopy() || $this->isGridAdd())
-			$this->EmployeeID->Visible = FALSE;
+			$this->id->Visible = FALSE;
 	}
 
 	// Lookup data
@@ -758,11 +762,6 @@ class t201_users_list extends t201_users
 				$Security->UserID_Loading();
 				$Security->loadUserID();
 				$Security->UserID_Loaded();
-				if (strval($Security->currentUserID()) == "") {
-					$this->setFailureMessage(DeniedMessage()); // Set no permission
-					$this->terminate();
-					return;
-				}
 			}
 		}
 		$this->CurrentAction = Param("action"); // Set up current action
@@ -774,33 +773,8 @@ class t201_users_list extends t201_users
 
 		// Set up list options
 		$this->setupListOptions();
-		$this->EmployeeID->Visible = FALSE;
-		$this->LastName->Visible = FALSE;
-		$this->FirstName->Visible = FALSE;
-		$this->Title->Visible = FALSE;
-		$this->TitleOfCourtesy->Visible = FALSE;
-		$this->BirthDate->Visible = FALSE;
-		$this->HireDate->Visible = FALSE;
-		$this->Address->Visible = FALSE;
-		$this->City->Visible = FALSE;
-		$this->Region->Visible = FALSE;
-		$this->PostalCode->Visible = FALSE;
-		$this->Country->Visible = FALSE;
-		$this->HomePhone->Visible = FALSE;
-		$this->Extension->Visible = FALSE;
-		$this->_Email->Visible = FALSE;
-		$this->Photo->Visible = FALSE;
-		$this->Notes->Visible = FALSE;
-		$this->ReportsTo->Visible = FALSE;
-		$this->Password->Visible = FALSE;
-		$this->UserLevel->setVisibility();
-		$this->Username->setVisibility();
-		$this->Activated->Visible = FALSE;
-		$this->Profile->Visible = FALSE;
-		$this->sekolah_id->setVisibility();
-		$this->tahunajaran_id->setVisibility();
-		$this->kelas_id->setVisibility();
-		$this->semester_id->setVisibility();
+		$this->id->Visible = FALSE;
+		$this->Kelas->setVisibility();
 		$this->hideFieldsForAddEdit();
 
 		// Global Page Loading event (in userfn*.php)
@@ -834,13 +808,8 @@ class t201_users_list extends t201_users
 		}
 
 		// Set up lookup cache
-		$this->setupLookupOptions($this->UserLevel);
-		$this->setupLookupOptions($this->sekolah_id);
-		$this->setupLookupOptions($this->tahunajaran_id);
-		$this->setupLookupOptions($this->kelas_id);
-		$this->setupLookupOptions($this->semester_id);
-
 		// Search filters
+
 		$srchAdvanced = ""; // Advanced search filter
 		$srchBasic = ""; // Basic search filter
 		$filter = "";
@@ -1070,8 +1039,8 @@ class t201_users_list extends t201_users
 	{
 		$arKeyFlds = explode(Config("COMPOSITE_KEY_SEPARATOR"), $key);
 		if (count($arKeyFlds) >= 1) {
-			$this->EmployeeID->setOldValue($arKeyFlds[0]);
-			if (!is_numeric($this->EmployeeID->OldValue))
+			$this->id->setOldValue($arKeyFlds[0]);
+			if (!is_numeric($this->id->OldValue))
 				return FALSE;
 		}
 		return TRUE;
@@ -1085,33 +1054,8 @@ class t201_users_list extends t201_users
 		// Initialize
 		$filterList = "";
 		$savedFilterList = "";
-		$filterList = Concat($filterList, $this->EmployeeID->AdvancedSearch->toJson(), ","); // Field EmployeeID
-		$filterList = Concat($filterList, $this->LastName->AdvancedSearch->toJson(), ","); // Field LastName
-		$filterList = Concat($filterList, $this->FirstName->AdvancedSearch->toJson(), ","); // Field FirstName
-		$filterList = Concat($filterList, $this->Title->AdvancedSearch->toJson(), ","); // Field Title
-		$filterList = Concat($filterList, $this->TitleOfCourtesy->AdvancedSearch->toJson(), ","); // Field TitleOfCourtesy
-		$filterList = Concat($filterList, $this->BirthDate->AdvancedSearch->toJson(), ","); // Field BirthDate
-		$filterList = Concat($filterList, $this->HireDate->AdvancedSearch->toJson(), ","); // Field HireDate
-		$filterList = Concat($filterList, $this->Address->AdvancedSearch->toJson(), ","); // Field Address
-		$filterList = Concat($filterList, $this->City->AdvancedSearch->toJson(), ","); // Field City
-		$filterList = Concat($filterList, $this->Region->AdvancedSearch->toJson(), ","); // Field Region
-		$filterList = Concat($filterList, $this->PostalCode->AdvancedSearch->toJson(), ","); // Field PostalCode
-		$filterList = Concat($filterList, $this->Country->AdvancedSearch->toJson(), ","); // Field Country
-		$filterList = Concat($filterList, $this->HomePhone->AdvancedSearch->toJson(), ","); // Field HomePhone
-		$filterList = Concat($filterList, $this->Extension->AdvancedSearch->toJson(), ","); // Field Extension
-		$filterList = Concat($filterList, $this->_Email->AdvancedSearch->toJson(), ","); // Field Email
-		$filterList = Concat($filterList, $this->Photo->AdvancedSearch->toJson(), ","); // Field Photo
-		$filterList = Concat($filterList, $this->Notes->AdvancedSearch->toJson(), ","); // Field Notes
-		$filterList = Concat($filterList, $this->ReportsTo->AdvancedSearch->toJson(), ","); // Field ReportsTo
-		$filterList = Concat($filterList, $this->Password->AdvancedSearch->toJson(), ","); // Field Password
-		$filterList = Concat($filterList, $this->UserLevel->AdvancedSearch->toJson(), ","); // Field UserLevel
-		$filterList = Concat($filterList, $this->Username->AdvancedSearch->toJson(), ","); // Field Username
-		$filterList = Concat($filterList, $this->Activated->AdvancedSearch->toJson(), ","); // Field Activated
-		$filterList = Concat($filterList, $this->Profile->AdvancedSearch->toJson(), ","); // Field Profile
-		$filterList = Concat($filterList, $this->sekolah_id->AdvancedSearch->toJson(), ","); // Field sekolah_id
-		$filterList = Concat($filterList, $this->tahunajaran_id->AdvancedSearch->toJson(), ","); // Field tahunajaran_id
-		$filterList = Concat($filterList, $this->kelas_id->AdvancedSearch->toJson(), ","); // Field kelas_id
-		$filterList = Concat($filterList, $this->semester_id->AdvancedSearch->toJson(), ","); // Field semester_id
+		$filterList = Concat($filterList, $this->id->AdvancedSearch->toJson(), ","); // Field id
+		$filterList = Concat($filterList, $this->Kelas->AdvancedSearch->toJson(), ","); // Field Kelas
 		if ($this->BasicSearch->Keyword != "") {
 			$wrk = "\"" . Config("TABLE_BASIC_SEARCH") . "\":\"" . JsEncode($this->BasicSearch->Keyword) . "\",\"" . Config("TABLE_BASIC_SEARCH_TYPE") . "\":\"" . JsEncode($this->BasicSearch->Type) . "\"";
 			$filterList = Concat($filterList, $wrk, ",");
@@ -1131,7 +1075,7 @@ class t201_users_list extends t201_users
 		global $UserProfile;
 		if (Post("ajax") == "savefilters") { // Save filter request (Ajax)
 			$filters = Post("filters");
-			$UserProfile->setSearchFilters(CurrentUserName(), "ft201_userslistsrch", $filters);
+			$UserProfile->setSearchFilters(CurrentUserName(), "ft003_kelaslistsrch", $filters);
 			WriteJson([["success" => TRUE]]); // Success
 			return TRUE;
 		} elseif (Post("cmd") == "resetfilter") {
@@ -1150,221 +1094,21 @@ class t201_users_list extends t201_users
 		$filter = json_decode(Post("filter"), TRUE);
 		$this->Command = "search";
 
-		// Field EmployeeID
-		$this->EmployeeID->AdvancedSearch->SearchValue = @$filter["x_EmployeeID"];
-		$this->EmployeeID->AdvancedSearch->SearchOperator = @$filter["z_EmployeeID"];
-		$this->EmployeeID->AdvancedSearch->SearchCondition = @$filter["v_EmployeeID"];
-		$this->EmployeeID->AdvancedSearch->SearchValue2 = @$filter["y_EmployeeID"];
-		$this->EmployeeID->AdvancedSearch->SearchOperator2 = @$filter["w_EmployeeID"];
-		$this->EmployeeID->AdvancedSearch->save();
+		// Field id
+		$this->id->AdvancedSearch->SearchValue = @$filter["x_id"];
+		$this->id->AdvancedSearch->SearchOperator = @$filter["z_id"];
+		$this->id->AdvancedSearch->SearchCondition = @$filter["v_id"];
+		$this->id->AdvancedSearch->SearchValue2 = @$filter["y_id"];
+		$this->id->AdvancedSearch->SearchOperator2 = @$filter["w_id"];
+		$this->id->AdvancedSearch->save();
 
-		// Field LastName
-		$this->LastName->AdvancedSearch->SearchValue = @$filter["x_LastName"];
-		$this->LastName->AdvancedSearch->SearchOperator = @$filter["z_LastName"];
-		$this->LastName->AdvancedSearch->SearchCondition = @$filter["v_LastName"];
-		$this->LastName->AdvancedSearch->SearchValue2 = @$filter["y_LastName"];
-		$this->LastName->AdvancedSearch->SearchOperator2 = @$filter["w_LastName"];
-		$this->LastName->AdvancedSearch->save();
-
-		// Field FirstName
-		$this->FirstName->AdvancedSearch->SearchValue = @$filter["x_FirstName"];
-		$this->FirstName->AdvancedSearch->SearchOperator = @$filter["z_FirstName"];
-		$this->FirstName->AdvancedSearch->SearchCondition = @$filter["v_FirstName"];
-		$this->FirstName->AdvancedSearch->SearchValue2 = @$filter["y_FirstName"];
-		$this->FirstName->AdvancedSearch->SearchOperator2 = @$filter["w_FirstName"];
-		$this->FirstName->AdvancedSearch->save();
-
-		// Field Title
-		$this->Title->AdvancedSearch->SearchValue = @$filter["x_Title"];
-		$this->Title->AdvancedSearch->SearchOperator = @$filter["z_Title"];
-		$this->Title->AdvancedSearch->SearchCondition = @$filter["v_Title"];
-		$this->Title->AdvancedSearch->SearchValue2 = @$filter["y_Title"];
-		$this->Title->AdvancedSearch->SearchOperator2 = @$filter["w_Title"];
-		$this->Title->AdvancedSearch->save();
-
-		// Field TitleOfCourtesy
-		$this->TitleOfCourtesy->AdvancedSearch->SearchValue = @$filter["x_TitleOfCourtesy"];
-		$this->TitleOfCourtesy->AdvancedSearch->SearchOperator = @$filter["z_TitleOfCourtesy"];
-		$this->TitleOfCourtesy->AdvancedSearch->SearchCondition = @$filter["v_TitleOfCourtesy"];
-		$this->TitleOfCourtesy->AdvancedSearch->SearchValue2 = @$filter["y_TitleOfCourtesy"];
-		$this->TitleOfCourtesy->AdvancedSearch->SearchOperator2 = @$filter["w_TitleOfCourtesy"];
-		$this->TitleOfCourtesy->AdvancedSearch->save();
-
-		// Field BirthDate
-		$this->BirthDate->AdvancedSearch->SearchValue = @$filter["x_BirthDate"];
-		$this->BirthDate->AdvancedSearch->SearchOperator = @$filter["z_BirthDate"];
-		$this->BirthDate->AdvancedSearch->SearchCondition = @$filter["v_BirthDate"];
-		$this->BirthDate->AdvancedSearch->SearchValue2 = @$filter["y_BirthDate"];
-		$this->BirthDate->AdvancedSearch->SearchOperator2 = @$filter["w_BirthDate"];
-		$this->BirthDate->AdvancedSearch->save();
-
-		// Field HireDate
-		$this->HireDate->AdvancedSearch->SearchValue = @$filter["x_HireDate"];
-		$this->HireDate->AdvancedSearch->SearchOperator = @$filter["z_HireDate"];
-		$this->HireDate->AdvancedSearch->SearchCondition = @$filter["v_HireDate"];
-		$this->HireDate->AdvancedSearch->SearchValue2 = @$filter["y_HireDate"];
-		$this->HireDate->AdvancedSearch->SearchOperator2 = @$filter["w_HireDate"];
-		$this->HireDate->AdvancedSearch->save();
-
-		// Field Address
-		$this->Address->AdvancedSearch->SearchValue = @$filter["x_Address"];
-		$this->Address->AdvancedSearch->SearchOperator = @$filter["z_Address"];
-		$this->Address->AdvancedSearch->SearchCondition = @$filter["v_Address"];
-		$this->Address->AdvancedSearch->SearchValue2 = @$filter["y_Address"];
-		$this->Address->AdvancedSearch->SearchOperator2 = @$filter["w_Address"];
-		$this->Address->AdvancedSearch->save();
-
-		// Field City
-		$this->City->AdvancedSearch->SearchValue = @$filter["x_City"];
-		$this->City->AdvancedSearch->SearchOperator = @$filter["z_City"];
-		$this->City->AdvancedSearch->SearchCondition = @$filter["v_City"];
-		$this->City->AdvancedSearch->SearchValue2 = @$filter["y_City"];
-		$this->City->AdvancedSearch->SearchOperator2 = @$filter["w_City"];
-		$this->City->AdvancedSearch->save();
-
-		// Field Region
-		$this->Region->AdvancedSearch->SearchValue = @$filter["x_Region"];
-		$this->Region->AdvancedSearch->SearchOperator = @$filter["z_Region"];
-		$this->Region->AdvancedSearch->SearchCondition = @$filter["v_Region"];
-		$this->Region->AdvancedSearch->SearchValue2 = @$filter["y_Region"];
-		$this->Region->AdvancedSearch->SearchOperator2 = @$filter["w_Region"];
-		$this->Region->AdvancedSearch->save();
-
-		// Field PostalCode
-		$this->PostalCode->AdvancedSearch->SearchValue = @$filter["x_PostalCode"];
-		$this->PostalCode->AdvancedSearch->SearchOperator = @$filter["z_PostalCode"];
-		$this->PostalCode->AdvancedSearch->SearchCondition = @$filter["v_PostalCode"];
-		$this->PostalCode->AdvancedSearch->SearchValue2 = @$filter["y_PostalCode"];
-		$this->PostalCode->AdvancedSearch->SearchOperator2 = @$filter["w_PostalCode"];
-		$this->PostalCode->AdvancedSearch->save();
-
-		// Field Country
-		$this->Country->AdvancedSearch->SearchValue = @$filter["x_Country"];
-		$this->Country->AdvancedSearch->SearchOperator = @$filter["z_Country"];
-		$this->Country->AdvancedSearch->SearchCondition = @$filter["v_Country"];
-		$this->Country->AdvancedSearch->SearchValue2 = @$filter["y_Country"];
-		$this->Country->AdvancedSearch->SearchOperator2 = @$filter["w_Country"];
-		$this->Country->AdvancedSearch->save();
-
-		// Field HomePhone
-		$this->HomePhone->AdvancedSearch->SearchValue = @$filter["x_HomePhone"];
-		$this->HomePhone->AdvancedSearch->SearchOperator = @$filter["z_HomePhone"];
-		$this->HomePhone->AdvancedSearch->SearchCondition = @$filter["v_HomePhone"];
-		$this->HomePhone->AdvancedSearch->SearchValue2 = @$filter["y_HomePhone"];
-		$this->HomePhone->AdvancedSearch->SearchOperator2 = @$filter["w_HomePhone"];
-		$this->HomePhone->AdvancedSearch->save();
-
-		// Field Extension
-		$this->Extension->AdvancedSearch->SearchValue = @$filter["x_Extension"];
-		$this->Extension->AdvancedSearch->SearchOperator = @$filter["z_Extension"];
-		$this->Extension->AdvancedSearch->SearchCondition = @$filter["v_Extension"];
-		$this->Extension->AdvancedSearch->SearchValue2 = @$filter["y_Extension"];
-		$this->Extension->AdvancedSearch->SearchOperator2 = @$filter["w_Extension"];
-		$this->Extension->AdvancedSearch->save();
-
-		// Field Email
-		$this->_Email->AdvancedSearch->SearchValue = @$filter["x__Email"];
-		$this->_Email->AdvancedSearch->SearchOperator = @$filter["z__Email"];
-		$this->_Email->AdvancedSearch->SearchCondition = @$filter["v__Email"];
-		$this->_Email->AdvancedSearch->SearchValue2 = @$filter["y__Email"];
-		$this->_Email->AdvancedSearch->SearchOperator2 = @$filter["w__Email"];
-		$this->_Email->AdvancedSearch->save();
-
-		// Field Photo
-		$this->Photo->AdvancedSearch->SearchValue = @$filter["x_Photo"];
-		$this->Photo->AdvancedSearch->SearchOperator = @$filter["z_Photo"];
-		$this->Photo->AdvancedSearch->SearchCondition = @$filter["v_Photo"];
-		$this->Photo->AdvancedSearch->SearchValue2 = @$filter["y_Photo"];
-		$this->Photo->AdvancedSearch->SearchOperator2 = @$filter["w_Photo"];
-		$this->Photo->AdvancedSearch->save();
-
-		// Field Notes
-		$this->Notes->AdvancedSearch->SearchValue = @$filter["x_Notes"];
-		$this->Notes->AdvancedSearch->SearchOperator = @$filter["z_Notes"];
-		$this->Notes->AdvancedSearch->SearchCondition = @$filter["v_Notes"];
-		$this->Notes->AdvancedSearch->SearchValue2 = @$filter["y_Notes"];
-		$this->Notes->AdvancedSearch->SearchOperator2 = @$filter["w_Notes"];
-		$this->Notes->AdvancedSearch->save();
-
-		// Field ReportsTo
-		$this->ReportsTo->AdvancedSearch->SearchValue = @$filter["x_ReportsTo"];
-		$this->ReportsTo->AdvancedSearch->SearchOperator = @$filter["z_ReportsTo"];
-		$this->ReportsTo->AdvancedSearch->SearchCondition = @$filter["v_ReportsTo"];
-		$this->ReportsTo->AdvancedSearch->SearchValue2 = @$filter["y_ReportsTo"];
-		$this->ReportsTo->AdvancedSearch->SearchOperator2 = @$filter["w_ReportsTo"];
-		$this->ReportsTo->AdvancedSearch->save();
-
-		// Field Password
-		$this->Password->AdvancedSearch->SearchValue = @$filter["x_Password"];
-		$this->Password->AdvancedSearch->SearchOperator = @$filter["z_Password"];
-		$this->Password->AdvancedSearch->SearchCondition = @$filter["v_Password"];
-		$this->Password->AdvancedSearch->SearchValue2 = @$filter["y_Password"];
-		$this->Password->AdvancedSearch->SearchOperator2 = @$filter["w_Password"];
-		$this->Password->AdvancedSearch->save();
-
-		// Field UserLevel
-		$this->UserLevel->AdvancedSearch->SearchValue = @$filter["x_UserLevel"];
-		$this->UserLevel->AdvancedSearch->SearchOperator = @$filter["z_UserLevel"];
-		$this->UserLevel->AdvancedSearch->SearchCondition = @$filter["v_UserLevel"];
-		$this->UserLevel->AdvancedSearch->SearchValue2 = @$filter["y_UserLevel"];
-		$this->UserLevel->AdvancedSearch->SearchOperator2 = @$filter["w_UserLevel"];
-		$this->UserLevel->AdvancedSearch->save();
-
-		// Field Username
-		$this->Username->AdvancedSearch->SearchValue = @$filter["x_Username"];
-		$this->Username->AdvancedSearch->SearchOperator = @$filter["z_Username"];
-		$this->Username->AdvancedSearch->SearchCondition = @$filter["v_Username"];
-		$this->Username->AdvancedSearch->SearchValue2 = @$filter["y_Username"];
-		$this->Username->AdvancedSearch->SearchOperator2 = @$filter["w_Username"];
-		$this->Username->AdvancedSearch->save();
-
-		// Field Activated
-		$this->Activated->AdvancedSearch->SearchValue = @$filter["x_Activated"];
-		$this->Activated->AdvancedSearch->SearchOperator = @$filter["z_Activated"];
-		$this->Activated->AdvancedSearch->SearchCondition = @$filter["v_Activated"];
-		$this->Activated->AdvancedSearch->SearchValue2 = @$filter["y_Activated"];
-		$this->Activated->AdvancedSearch->SearchOperator2 = @$filter["w_Activated"];
-		$this->Activated->AdvancedSearch->save();
-
-		// Field Profile
-		$this->Profile->AdvancedSearch->SearchValue = @$filter["x_Profile"];
-		$this->Profile->AdvancedSearch->SearchOperator = @$filter["z_Profile"];
-		$this->Profile->AdvancedSearch->SearchCondition = @$filter["v_Profile"];
-		$this->Profile->AdvancedSearch->SearchValue2 = @$filter["y_Profile"];
-		$this->Profile->AdvancedSearch->SearchOperator2 = @$filter["w_Profile"];
-		$this->Profile->AdvancedSearch->save();
-
-		// Field sekolah_id
-		$this->sekolah_id->AdvancedSearch->SearchValue = @$filter["x_sekolah_id"];
-		$this->sekolah_id->AdvancedSearch->SearchOperator = @$filter["z_sekolah_id"];
-		$this->sekolah_id->AdvancedSearch->SearchCondition = @$filter["v_sekolah_id"];
-		$this->sekolah_id->AdvancedSearch->SearchValue2 = @$filter["y_sekolah_id"];
-		$this->sekolah_id->AdvancedSearch->SearchOperator2 = @$filter["w_sekolah_id"];
-		$this->sekolah_id->AdvancedSearch->save();
-
-		// Field tahunajaran_id
-		$this->tahunajaran_id->AdvancedSearch->SearchValue = @$filter["x_tahunajaran_id"];
-		$this->tahunajaran_id->AdvancedSearch->SearchOperator = @$filter["z_tahunajaran_id"];
-		$this->tahunajaran_id->AdvancedSearch->SearchCondition = @$filter["v_tahunajaran_id"];
-		$this->tahunajaran_id->AdvancedSearch->SearchValue2 = @$filter["y_tahunajaran_id"];
-		$this->tahunajaran_id->AdvancedSearch->SearchOperator2 = @$filter["w_tahunajaran_id"];
-		$this->tahunajaran_id->AdvancedSearch->save();
-
-		// Field kelas_id
-		$this->kelas_id->AdvancedSearch->SearchValue = @$filter["x_kelas_id"];
-		$this->kelas_id->AdvancedSearch->SearchOperator = @$filter["z_kelas_id"];
-		$this->kelas_id->AdvancedSearch->SearchCondition = @$filter["v_kelas_id"];
-		$this->kelas_id->AdvancedSearch->SearchValue2 = @$filter["y_kelas_id"];
-		$this->kelas_id->AdvancedSearch->SearchOperator2 = @$filter["w_kelas_id"];
-		$this->kelas_id->AdvancedSearch->save();
-
-		// Field semester_id
-		$this->semester_id->AdvancedSearch->SearchValue = @$filter["x_semester_id"];
-		$this->semester_id->AdvancedSearch->SearchOperator = @$filter["z_semester_id"];
-		$this->semester_id->AdvancedSearch->SearchCondition = @$filter["v_semester_id"];
-		$this->semester_id->AdvancedSearch->SearchValue2 = @$filter["y_semester_id"];
-		$this->semester_id->AdvancedSearch->SearchOperator2 = @$filter["w_semester_id"];
-		$this->semester_id->AdvancedSearch->save();
+		// Field Kelas
+		$this->Kelas->AdvancedSearch->SearchValue = @$filter["x_Kelas"];
+		$this->Kelas->AdvancedSearch->SearchOperator = @$filter["z_Kelas"];
+		$this->Kelas->AdvancedSearch->SearchCondition = @$filter["v_Kelas"];
+		$this->Kelas->AdvancedSearch->SearchValue2 = @$filter["y_Kelas"];
+		$this->Kelas->AdvancedSearch->SearchOperator2 = @$filter["w_Kelas"];
+		$this->Kelas->AdvancedSearch->save();
 		$this->BasicSearch->setKeyword(@$filter[Config("TABLE_BASIC_SEARCH")]);
 		$this->BasicSearch->setType(@$filter[Config("TABLE_BASIC_SEARCH_TYPE")]);
 	}
@@ -1373,23 +1117,7 @@ class t201_users_list extends t201_users
 	protected function basicSearchSql($arKeywords, $type)
 	{
 		$where = "";
-		$this->buildBasicSearchSql($where, $this->LastName, $arKeywords, $type);
-		$this->buildBasicSearchSql($where, $this->FirstName, $arKeywords, $type);
-		$this->buildBasicSearchSql($where, $this->Title, $arKeywords, $type);
-		$this->buildBasicSearchSql($where, $this->TitleOfCourtesy, $arKeywords, $type);
-		$this->buildBasicSearchSql($where, $this->Address, $arKeywords, $type);
-		$this->buildBasicSearchSql($where, $this->City, $arKeywords, $type);
-		$this->buildBasicSearchSql($where, $this->Region, $arKeywords, $type);
-		$this->buildBasicSearchSql($where, $this->PostalCode, $arKeywords, $type);
-		$this->buildBasicSearchSql($where, $this->Country, $arKeywords, $type);
-		$this->buildBasicSearchSql($where, $this->HomePhone, $arKeywords, $type);
-		$this->buildBasicSearchSql($where, $this->Extension, $arKeywords, $type);
-		$this->buildBasicSearchSql($where, $this->_Email, $arKeywords, $type);
-		$this->buildBasicSearchSql($where, $this->Photo, $arKeywords, $type);
-		$this->buildBasicSearchSql($where, $this->Notes, $arKeywords, $type);
-		$this->buildBasicSearchSql($where, $this->Password, $arKeywords, $type);
-		$this->buildBasicSearchSql($where, $this->Username, $arKeywords, $type);
-		$this->buildBasicSearchSql($where, $this->Profile, $arKeywords, $type);
+		$this->buildBasicSearchSql($where, $this->Kelas, $arKeywords, $type);
 		return $where;
 	}
 
@@ -1548,12 +1276,7 @@ class t201_users_list extends t201_users
 		if (Get("order") !== NULL) {
 			$this->CurrentOrder = Get("order");
 			$this->CurrentOrderType = Get("ordertype", "");
-			$this->updateSort($this->UserLevel); // UserLevel
-			$this->updateSort($this->Username); // Username
-			$this->updateSort($this->sekolah_id); // sekolah_id
-			$this->updateSort($this->tahunajaran_id); // tahunajaran_id
-			$this->updateSort($this->kelas_id); // kelas_id
-			$this->updateSort($this->semester_id); // semester_id
+			$this->updateSort($this->Kelas); // Kelas
 			$this->setStartRecordNumber(1); // Reset start position
 		}
 	}
@@ -1589,12 +1312,7 @@ class t201_users_list extends t201_users
 			if ($this->Command == "resetsort") {
 				$orderBy = "";
 				$this->setSessionOrderBy($orderBy);
-				$this->UserLevel->setSort("");
-				$this->Username->setSort("");
-				$this->sekolah_id->setSort("");
-				$this->tahunajaran_id->setSort("");
-				$this->kelas_id->setSort("");
-				$this->semester_id->setSort("");
+				$this->Kelas->setSort("");
 			}
 
 			// Reset start position
@@ -1655,14 +1373,6 @@ class t201_users_list extends t201_users
 		$item->ShowInDropDown = FALSE;
 		$item->ShowInButtonGroup = FALSE;
 
-		// "sequence"
-		$item = &$this->ListOptions->add("sequence");
-		$item->CssClass = "text-nowrap";
-		$item->Visible = TRUE;
-		$item->OnLeft = TRUE; // Always on left
-		$item->ShowInDropDown = FALSE;
-		$item->ShowInButtonGroup = FALSE;
-
 		// Drop down button for ListOptions
 		$this->ListOptions->UseDropDownButton = FALSE;
 		$this->ListOptions->DropDownButtonPhrase = $Language->phrase("ButtonListOptions");
@@ -1688,14 +1398,10 @@ class t201_users_list extends t201_users
 		// Call ListOptions_Rendering event
 		$this->ListOptions_Rendering();
 
-		// "sequence"
-		$opt = $this->ListOptions["sequence"];
-		$opt->Body = FormatSequenceNumber($this->RecordCount);
-
 		// "view"
 		$opt = $this->ListOptions["view"];
 		$viewcaption = HtmlTitle($Language->phrase("ViewLink"));
-		if ($Security->canView() && $this->showOptionLink('view')) {
+		if ($Security->canView()) {
 			$opt->Body = "<a class=\"ew-row-link ew-view\" title=\"" . $viewcaption . "\" data-caption=\"" . $viewcaption . "\" href=\"" . HtmlEncode($this->ViewUrl) . "\">" . $Language->phrase("ViewLink") . "</a>";
 		} else {
 			$opt->Body = "";
@@ -1704,7 +1410,7 @@ class t201_users_list extends t201_users
 		// "edit"
 		$opt = $this->ListOptions["edit"];
 		$editcaption = HtmlTitle($Language->phrase("EditLink"));
-		if ($Security->canEdit() && $this->showOptionLink('edit')) {
+		if ($Security->canEdit()) {
 			$opt->Body = "<a class=\"ew-row-link ew-edit\" title=\"" . HtmlTitle($Language->phrase("EditLink")) . "\" data-caption=\"" . HtmlTitle($Language->phrase("EditLink")) . "\" href=\"" . HtmlEncode($this->EditUrl) . "\">" . $Language->phrase("EditLink") . "</a>";
 		} else {
 			$opt->Body = "";
@@ -1713,7 +1419,7 @@ class t201_users_list extends t201_users
 		// "copy"
 		$opt = $this->ListOptions["copy"];
 		$copycaption = HtmlTitle($Language->phrase("CopyLink"));
-		if ($Security->canAdd() && $this->showOptionLink('add')) {
+		if ($Security->canAdd()) {
 			$opt->Body = "<a class=\"ew-row-link ew-copy\" title=\"" . $copycaption . "\" data-caption=\"" . $copycaption . "\" href=\"" . HtmlEncode($this->CopyUrl) . "\">" . $Language->phrase("CopyLink") . "</a>";
 		} else {
 			$opt->Body = "";
@@ -1721,7 +1427,7 @@ class t201_users_list extends t201_users
 
 		// "delete"
 		$opt = $this->ListOptions["delete"];
-		if ($Security->canDelete() && $this->showOptionLink('delete'))
+		if ($Security->canDelete())
 			$opt->Body = "<a class=\"ew-row-link ew-delete\"" . "" . " title=\"" . HtmlTitle($Language->phrase("DeleteLink")) . "\" data-caption=\"" . HtmlTitle($Language->phrase("DeleteLink")) . "\" href=\"" . HtmlEncode($this->DeleteUrl) . "\">" . $Language->phrase("DeleteLink") . "</a>";
 		else
 			$opt->Body = "";
@@ -1757,7 +1463,7 @@ class t201_users_list extends t201_users
 
 		// "checkbox"
 		$opt = $this->ListOptions["checkbox"];
-		$opt->Body = "<div class=\"custom-control custom-checkbox d-inline-block\"><input type=\"checkbox\" id=\"key_m_" . $this->RowCount . "\" name=\"key_m[]\" class=\"custom-control-input ew-multi-select\" value=\"" . HtmlEncode($this->EmployeeID->CurrentValue) . "\" onclick=\"ew.clickMultiCheckbox(event);\"><label class=\"custom-control-label\" for=\"key_m_" . $this->RowCount . "\"></label></div>";
+		$opt->Body = "<div class=\"custom-control custom-checkbox d-inline-block\"><input type=\"checkbox\" id=\"key_m_" . $this->RowCount . "\" name=\"key_m[]\" class=\"custom-control-input ew-multi-select\" value=\"" . HtmlEncode($this->id->CurrentValue) . "\" onclick=\"ew.clickMultiCheckbox(event);\"><label class=\"custom-control-label\" for=\"key_m_" . $this->RowCount . "\"></label></div>";
 		$this->renderListOptionsExt();
 
 		// Call ListOptions_Rendered event
@@ -1794,10 +1500,10 @@ class t201_users_list extends t201_users
 
 		// Filter button
 		$item = &$this->FilterOptions->add("savecurrentfilter");
-		$item->Body = "<a class=\"ew-save-filter\" data-form=\"ft201_userslistsrch\" href=\"#\" onclick=\"return false;\">" . $Language->phrase("SaveCurrentFilter") . "</a>";
+		$item->Body = "<a class=\"ew-save-filter\" data-form=\"ft003_kelaslistsrch\" href=\"#\" onclick=\"return false;\">" . $Language->phrase("SaveCurrentFilter") . "</a>";
 		$item->Visible = TRUE;
 		$item = &$this->FilterOptions->add("deletefilter");
-		$item->Body = "<a class=\"ew-delete-filter\" data-form=\"ft201_userslistsrch\" href=\"#\" onclick=\"return false;\">" . $Language->phrase("DeleteFilter") . "</a>";
+		$item->Body = "<a class=\"ew-delete-filter\" data-form=\"ft003_kelaslistsrch\" href=\"#\" onclick=\"return false;\">" . $Language->phrase("DeleteFilter") . "</a>";
 		$item->Visible = TRUE;
 		$this->FilterOptions->UseDropDownButton = TRUE;
 		$this->FilterOptions->UseButtonGroup = !$this->FilterOptions->UseDropDownButton;
@@ -1822,7 +1528,7 @@ class t201_users_list extends t201_users
 					$item = &$option->add("custom_" . $listaction->Action);
 					$caption = $listaction->Caption;
 					$icon = ($listaction->Icon != "") ? "<i class=\"" . HtmlEncode($listaction->Icon) . "\" data-caption=\"" . HtmlEncode($caption) . "\"></i> " . $caption : $caption;
-					$item->Body = "<a class=\"ew-action ew-list-action\" title=\"" . HtmlEncode($caption) . "\" data-caption=\"" . HtmlEncode($caption) . "\" href=\"#\" onclick=\"return ew.submitAction(event,jQuery.extend({f:document.ft201_userslist}," . $listaction->toJson(TRUE) . "));\">" . $icon . "</a>";
+					$item->Body = "<a class=\"ew-action ew-list-action\" title=\"" . HtmlEncode($caption) . "\" data-caption=\"" . HtmlEncode($caption) . "\" href=\"#\" onclick=\"return ew.submitAction(event,jQuery.extend({f:document.ft003_kelaslist}," . $listaction->toJson(TRUE) . "));\">" . $icon . "</a>";
 					$item->Visible = $listaction->Allow;
 				}
 			}
@@ -1877,20 +1583,7 @@ class t201_users_list extends t201_users
 				while (!$rs->EOF) {
 					$this->SelectedIndex++;
 					$row = $rs->fields;
-					$user = GetUserInfo(Config("LOGIN_USERNAME_FIELD_NAME"), $row);
-					if ($userlist != "")
-						$userlist .= ",";
-					$userlist .= $user;
-					if ($userAction == "resendregisteremail")
-						$processed = FALSE;
-					elseif ($userAction == "resetconcurrentuser")
-						$processed = FALSE;
-					elseif ($userAction == "resetloginretry")
-						$processed = FALSE;
-					elseif ($userAction == "setpasswordexpired")
-						$processed = FALSE;
-					else
-						$processed = $this->Row_CustomAction($userAction, $row);
+					$processed = $this->Row_CustomAction($userAction, $row);
 					if (!$processed)
 						break;
 					$rs->moveNext();
@@ -2013,66 +1706,16 @@ class t201_users_list extends t201_users
 		$this->Row_Selected($row);
 		if (!$rs || $rs->EOF)
 			return;
-		$this->EmployeeID->setDbValue($row['EmployeeID']);
-		$this->LastName->setDbValue($row['LastName']);
-		$this->FirstName->setDbValue($row['FirstName']);
-		$this->Title->setDbValue($row['Title']);
-		$this->TitleOfCourtesy->setDbValue($row['TitleOfCourtesy']);
-		$this->BirthDate->setDbValue($row['BirthDate']);
-		$this->HireDate->setDbValue($row['HireDate']);
-		$this->Address->setDbValue($row['Address']);
-		$this->City->setDbValue($row['City']);
-		$this->Region->setDbValue($row['Region']);
-		$this->PostalCode->setDbValue($row['PostalCode']);
-		$this->Country->setDbValue($row['Country']);
-		$this->HomePhone->setDbValue($row['HomePhone']);
-		$this->Extension->setDbValue($row['Extension']);
-		$this->_Email->setDbValue($row['Email']);
-		$this->Photo->setDbValue($row['Photo']);
-		$this->Notes->setDbValue($row['Notes']);
-		$this->ReportsTo->setDbValue($row['ReportsTo']);
-		$this->Password->setDbValue($row['Password']);
-		$this->UserLevel->setDbValue($row['UserLevel']);
-		$this->Username->setDbValue($row['Username']);
-		$this->Activated->setDbValue($row['Activated']);
-		$this->Profile->setDbValue($row['Profile']);
-		$this->sekolah_id->setDbValue($row['sekolah_id']);
-		$this->tahunajaran_id->setDbValue($row['tahunajaran_id']);
-		$this->kelas_id->setDbValue($row['kelas_id']);
-		$this->semester_id->setDbValue($row['semester_id']);
+		$this->id->setDbValue($row['id']);
+		$this->Kelas->setDbValue($row['Kelas']);
 	}
 
 	// Return a row with default values
 	protected function newRow()
 	{
 		$row = [];
-		$row['EmployeeID'] = NULL;
-		$row['LastName'] = NULL;
-		$row['FirstName'] = NULL;
-		$row['Title'] = NULL;
-		$row['TitleOfCourtesy'] = NULL;
-		$row['BirthDate'] = NULL;
-		$row['HireDate'] = NULL;
-		$row['Address'] = NULL;
-		$row['City'] = NULL;
-		$row['Region'] = NULL;
-		$row['PostalCode'] = NULL;
-		$row['Country'] = NULL;
-		$row['HomePhone'] = NULL;
-		$row['Extension'] = NULL;
-		$row['Email'] = NULL;
-		$row['Photo'] = NULL;
-		$row['Notes'] = NULL;
-		$row['ReportsTo'] = NULL;
-		$row['Password'] = NULL;
-		$row['UserLevel'] = NULL;
-		$row['Username'] = NULL;
-		$row['Activated'] = NULL;
-		$row['Profile'] = NULL;
-		$row['sekolah_id'] = NULL;
-		$row['tahunajaran_id'] = NULL;
-		$row['kelas_id'] = NULL;
-		$row['semester_id'] = NULL;
+		$row['id'] = NULL;
+		$row['Kelas'] = NULL;
 		return $row;
 	}
 
@@ -2082,8 +1725,8 @@ class t201_users_list extends t201_users
 
 		// Load key values from Session
 		$validKey = TRUE;
-		if (strval($this->getKey("EmployeeID")) != "")
-			$this->EmployeeID->OldValue = $this->getKey("EmployeeID"); // EmployeeID
+		if (strval($this->getKey("id")) != "")
+			$this->id->OldValue = $this->getKey("id"); // id
 		else
 			$validKey = FALSE;
 
@@ -2116,266 +1759,23 @@ class t201_users_list extends t201_users
 		$this->Row_Rendering();
 
 		// Common render codes for all row types
-		// EmployeeID
-		// LastName
-		// FirstName
-		// Title
-		// TitleOfCourtesy
-		// BirthDate
-		// HireDate
-		// Address
-		// City
-		// Region
-		// PostalCode
-		// Country
-		// HomePhone
-		// Extension
-		// Email
-		// Photo
-		// Notes
-		// ReportsTo
-		// Password
-		// UserLevel
-		// Username
-		// Activated
-		// Profile
-		// sekolah_id
-		// tahunajaran_id
-		// kelas_id
-		// semester_id
+		// id
+		// Kelas
 
 		if ($this->RowType == ROWTYPE_VIEW) { // View row
 
-			// EmployeeID
-			$this->EmployeeID->ViewValue = $this->EmployeeID->CurrentValue;
-			$this->EmployeeID->ViewCustomAttributes = "";
+			// id
+			$this->id->ViewValue = $this->id->CurrentValue;
+			$this->id->ViewCustomAttributes = "";
 
-			// LastName
-			$this->LastName->ViewValue = $this->LastName->CurrentValue;
-			$this->LastName->ViewCustomAttributes = "";
+			// Kelas
+			$this->Kelas->ViewValue = $this->Kelas->CurrentValue;
+			$this->Kelas->ViewCustomAttributes = "";
 
-			// FirstName
-			$this->FirstName->ViewValue = $this->FirstName->CurrentValue;
-			$this->FirstName->ViewCustomAttributes = "";
-
-			// Title
-			$this->Title->ViewValue = $this->Title->CurrentValue;
-			$this->Title->ViewCustomAttributes = "";
-
-			// TitleOfCourtesy
-			$this->TitleOfCourtesy->ViewValue = $this->TitleOfCourtesy->CurrentValue;
-			$this->TitleOfCourtesy->ViewCustomAttributes = "";
-
-			// BirthDate
-			$this->BirthDate->ViewValue = $this->BirthDate->CurrentValue;
-			$this->BirthDate->ViewValue = FormatDateTime($this->BirthDate->ViewValue, 0);
-			$this->BirthDate->ViewCustomAttributes = "";
-
-			// HireDate
-			$this->HireDate->ViewValue = $this->HireDate->CurrentValue;
-			$this->HireDate->ViewValue = FormatDateTime($this->HireDate->ViewValue, 0);
-			$this->HireDate->ViewCustomAttributes = "";
-
-			// Address
-			$this->Address->ViewValue = $this->Address->CurrentValue;
-			$this->Address->ViewCustomAttributes = "";
-
-			// City
-			$this->City->ViewValue = $this->City->CurrentValue;
-			$this->City->ViewCustomAttributes = "";
-
-			// Region
-			$this->Region->ViewValue = $this->Region->CurrentValue;
-			$this->Region->ViewCustomAttributes = "";
-
-			// PostalCode
-			$this->PostalCode->ViewValue = $this->PostalCode->CurrentValue;
-			$this->PostalCode->ViewCustomAttributes = "";
-
-			// Country
-			$this->Country->ViewValue = $this->Country->CurrentValue;
-			$this->Country->ViewCustomAttributes = "";
-
-			// HomePhone
-			$this->HomePhone->ViewValue = $this->HomePhone->CurrentValue;
-			$this->HomePhone->ViewCustomAttributes = "";
-
-			// Extension
-			$this->Extension->ViewValue = $this->Extension->CurrentValue;
-			$this->Extension->ViewCustomAttributes = "";
-
-			// Email
-			$this->_Email->ViewValue = $this->_Email->CurrentValue;
-			$this->_Email->ViewCustomAttributes = "";
-
-			// Photo
-			$this->Photo->ViewValue = $this->Photo->CurrentValue;
-			$this->Photo->ViewCustomAttributes = "";
-
-			// ReportsTo
-			$this->ReportsTo->ViewValue = $this->ReportsTo->CurrentValue;
-			$this->ReportsTo->ViewValue = FormatNumber($this->ReportsTo->ViewValue, 0, -2, -2, -2);
-			$this->ReportsTo->ViewCustomAttributes = "";
-
-			// Password
-			$this->Password->ViewValue = $this->Password->CurrentValue;
-			$this->Password->ViewCustomAttributes = "";
-
-			// UserLevel
-			if ($Security->canAdmin()) { // System admin
-				$curVal = strval($this->UserLevel->CurrentValue);
-				if ($curVal != "") {
-					$this->UserLevel->ViewValue = $this->UserLevel->lookupCacheOption($curVal);
-					if ($this->UserLevel->ViewValue === NULL) { // Lookup from database
-						$filterWrk = "`userlevelid`" . SearchString("=", $curVal, DATATYPE_NUMBER, "");
-						$sqlWrk = $this->UserLevel->Lookup->getSql(FALSE, $filterWrk, '', $this);
-						$rswrk = Conn()->execute($sqlWrk);
-						if ($rswrk && !$rswrk->EOF) { // Lookup values found
-							$arwrk = [];
-							$arwrk[1] = $rswrk->fields('df');
-							$this->UserLevel->ViewValue = $this->UserLevel->displayValue($arwrk);
-							$rswrk->Close();
-						} else {
-							$this->UserLevel->ViewValue = $this->UserLevel->CurrentValue;
-						}
-					}
-				} else {
-					$this->UserLevel->ViewValue = NULL;
-				}
-			} else {
-				$this->UserLevel->ViewValue = $Language->phrase("PasswordMask");
-			}
-			$this->UserLevel->ViewCustomAttributes = "";
-
-			// Username
-			$this->Username->ViewValue = $this->Username->CurrentValue;
-			$this->Username->ViewCustomAttributes = "";
-
-			// Activated
-			if (ConvertToBool($this->Activated->CurrentValue)) {
-				$this->Activated->ViewValue = $this->Activated->tagCaption(1) != "" ? $this->Activated->tagCaption(1) : "Y";
-			} else {
-				$this->Activated->ViewValue = $this->Activated->tagCaption(2) != "" ? $this->Activated->tagCaption(2) : "N";
-			}
-			$this->Activated->ViewCustomAttributes = "";
-
-			// sekolah_id
-			$curVal = strval($this->sekolah_id->CurrentValue);
-			if ($curVal != "") {
-				$this->sekolah_id->ViewValue = $this->sekolah_id->lookupCacheOption($curVal);
-				if ($this->sekolah_id->ViewValue === NULL) { // Lookup from database
-					$filterWrk = "`id`" . SearchString("=", $curVal, DATATYPE_NUMBER, "");
-					$sqlWrk = $this->sekolah_id->Lookup->getSql(FALSE, $filterWrk, '', $this);
-					$rswrk = Conn()->execute($sqlWrk);
-					if ($rswrk && !$rswrk->EOF) { // Lookup values found
-						$arwrk = [];
-						$arwrk[1] = $rswrk->fields('df');
-						$this->sekolah_id->ViewValue = $this->sekolah_id->displayValue($arwrk);
-						$rswrk->Close();
-					} else {
-						$this->sekolah_id->ViewValue = $this->sekolah_id->CurrentValue;
-					}
-				}
-			} else {
-				$this->sekolah_id->ViewValue = NULL;
-			}
-			$this->sekolah_id->ViewCustomAttributes = "";
-
-			// tahunajaran_id
-			$curVal = strval($this->tahunajaran_id->CurrentValue);
-			if ($curVal != "") {
-				$this->tahunajaran_id->ViewValue = $this->tahunajaran_id->lookupCacheOption($curVal);
-				if ($this->tahunajaran_id->ViewValue === NULL) { // Lookup from database
-					$filterWrk = "`id`" . SearchString("=", $curVal, DATATYPE_NUMBER, "");
-					$sqlWrk = $this->tahunajaran_id->Lookup->getSql(FALSE, $filterWrk, '', $this);
-					$rswrk = Conn()->execute($sqlWrk);
-					if ($rswrk && !$rswrk->EOF) { // Lookup values found
-						$arwrk = [];
-						$arwrk[1] = $rswrk->fields('df');
-						$this->tahunajaran_id->ViewValue = $this->tahunajaran_id->displayValue($arwrk);
-						$rswrk->Close();
-					} else {
-						$this->tahunajaran_id->ViewValue = $this->tahunajaran_id->CurrentValue;
-					}
-				}
-			} else {
-				$this->tahunajaran_id->ViewValue = NULL;
-			}
-			$this->tahunajaran_id->ViewCustomAttributes = "";
-
-			// kelas_id
-			$curVal = strval($this->kelas_id->CurrentValue);
-			if ($curVal != "") {
-				$this->kelas_id->ViewValue = $this->kelas_id->lookupCacheOption($curVal);
-				if ($this->kelas_id->ViewValue === NULL) { // Lookup from database
-					$filterWrk = "`id`" . SearchString("=", $curVal, DATATYPE_NUMBER, "");
-					$sqlWrk = $this->kelas_id->Lookup->getSql(FALSE, $filterWrk, '', $this);
-					$rswrk = Conn()->execute($sqlWrk);
-					if ($rswrk && !$rswrk->EOF) { // Lookup values found
-						$arwrk = [];
-						$arwrk[1] = $rswrk->fields('df');
-						$this->kelas_id->ViewValue = $this->kelas_id->displayValue($arwrk);
-						$rswrk->Close();
-					} else {
-						$this->kelas_id->ViewValue = $this->kelas_id->CurrentValue;
-					}
-				}
-			} else {
-				$this->kelas_id->ViewValue = NULL;
-			}
-			$this->kelas_id->ViewCustomAttributes = "";
-
-			// semester_id
-			$curVal = strval($this->semester_id->CurrentValue);
-			if ($curVal != "") {
-				$this->semester_id->ViewValue = $this->semester_id->lookupCacheOption($curVal);
-				if ($this->semester_id->ViewValue === NULL) { // Lookup from database
-					$filterWrk = "`id`" . SearchString("=", $curVal, DATATYPE_NUMBER, "");
-					$sqlWrk = $this->semester_id->Lookup->getSql(FALSE, $filterWrk, '', $this);
-					$rswrk = Conn()->execute($sqlWrk);
-					if ($rswrk && !$rswrk->EOF) { // Lookup values found
-						$arwrk = [];
-						$arwrk[1] = $rswrk->fields('df');
-						$this->semester_id->ViewValue = $this->semester_id->displayValue($arwrk);
-						$rswrk->Close();
-					} else {
-						$this->semester_id->ViewValue = $this->semester_id->CurrentValue;
-					}
-				}
-			} else {
-				$this->semester_id->ViewValue = NULL;
-			}
-			$this->semester_id->ViewCustomAttributes = "";
-
-			// UserLevel
-			$this->UserLevel->LinkCustomAttributes = "";
-			$this->UserLevel->HrefValue = "";
-			$this->UserLevel->TooltipValue = "";
-
-			// Username
-			$this->Username->LinkCustomAttributes = "";
-			$this->Username->HrefValue = "";
-			$this->Username->TooltipValue = "";
-
-			// sekolah_id
-			$this->sekolah_id->LinkCustomAttributes = "";
-			$this->sekolah_id->HrefValue = "";
-			$this->sekolah_id->TooltipValue = "";
-
-			// tahunajaran_id
-			$this->tahunajaran_id->LinkCustomAttributes = "";
-			$this->tahunajaran_id->HrefValue = "";
-			$this->tahunajaran_id->TooltipValue = "";
-
-			// kelas_id
-			$this->kelas_id->LinkCustomAttributes = "";
-			$this->kelas_id->HrefValue = "";
-			$this->kelas_id->TooltipValue = "";
-
-			// semester_id
-			$this->semester_id->LinkCustomAttributes = "";
-			$this->semester_id->HrefValue = "";
-			$this->semester_id->TooltipValue = "";
+			// Kelas
+			$this->Kelas->LinkCustomAttributes = "";
+			$this->Kelas->HrefValue = "";
+			$this->Kelas->TooltipValue = "";
 		}
 
 		// Call Row Rendered event
@@ -2393,7 +1793,7 @@ class t201_users_list extends t201_users
 		// Search button
 		$item = &$this->SearchOptions->add("searchtoggle");
 		$searchToggleClass = ($this->SearchWhere != "") ? " active" : " active";
-		$item->Body = "<a class=\"btn btn-default ew-search-toggle" . $searchToggleClass . "\" href=\"#\" role=\"button\" title=\"" . $Language->phrase("SearchPanel") . "\" data-caption=\"" . $Language->phrase("SearchPanel") . "\" data-toggle=\"button\" data-form=\"ft201_userslistsrch\" aria-pressed=\"" . ($searchToggleClass == " active" ? "true" : "false") . "\">" . $Language->phrase("SearchLink") . "</a>";
+		$item->Body = "<a class=\"btn btn-default ew-search-toggle" . $searchToggleClass . "\" href=\"#\" role=\"button\" title=\"" . $Language->phrase("SearchPanel") . "\" data-caption=\"" . $Language->phrase("SearchPanel") . "\" data-toggle=\"button\" data-form=\"ft003_kelaslistsrch\" aria-pressed=\"" . ($searchToggleClass == " active" ? "true" : "false") . "\">" . $Language->phrase("SearchLink") . "</a>";
 		$item->Visible = TRUE;
 
 		// Show all button
@@ -2421,15 +1821,6 @@ class t201_users_list extends t201_users
 		}
 	}
 
-	// Show link optionally based on User ID
-	protected function showOptionLink($id = "")
-	{
-		global $Security;
-		if ($Security->isLoggedIn() && !$Security->isAdmin() && !$this->userIDAllow($id))
-			return $Security->isValidUserID($this->EmployeeID->CurrentValue);
-		return TRUE;
-	}
-
 	// Set up Breadcrumb
 	protected function setupBreadcrumb()
 	{
@@ -2454,18 +1845,6 @@ class t201_users_list extends t201_users
 
 			// Set up lookup SQL and connection
 			switch ($fld->FieldVar) {
-				case "x_UserLevel":
-					break;
-				case "x_Activated":
-					break;
-				case "x_sekolah_id":
-					break;
-				case "x_tahunajaran_id":
-					break;
-				case "x_kelas_id":
-					break;
-				case "x_semester_id":
-					break;
 				default:
 					$lookupFilter = "";
 					break;
@@ -2486,16 +1865,6 @@ class t201_users_list extends t201_users
 
 					// Format the field values
 					switch ($fld->FieldVar) {
-						case "x_UserLevel":
-							break;
-						case "x_sekolah_id":
-							break;
-						case "x_tahunajaran_id":
-							break;
-						case "x_kelas_id":
-							break;
-						case "x_semester_id":
-							break;
 					}
 					$ar[strval($row[0])] = $row;
 					$rs->moveNext();

@@ -51,6 +51,9 @@ class r202_users extends ReportTable
 	public $Activated;
 	public $Profile;
 	public $sekolah_id;
+	public $tahunajaran_id;
+	public $kelas_id;
+	public $semester_id;
 
 	// Constructor
 	public function __construct()
@@ -246,6 +249,32 @@ class r202_users extends ReportTable
 		$this->sekolah_id->DefaultErrorMessage = $Language->phrase("IncorrectInteger");
 		$this->sekolah_id->SourceTableVar = 't201_users';
 		$this->fields['sekolah_id'] = &$this->sekolah_id;
+
+		// tahunajaran_id
+		$this->tahunajaran_id = new ReportField('r202_users', 'r202_users', 'x_tahunajaran_id', 'tahunajaran_id', '`tahunajaran_id`', '`tahunajaran_id`', 3, 11, -1, FALSE, '`tahunajaran_id`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'SELECT');
+		$this->tahunajaran_id->Sortable = TRUE; // Allow sort
+		$this->tahunajaran_id->UsePleaseSelect = TRUE; // Use PleaseSelect by default
+		$this->tahunajaran_id->PleaseSelectText = $Language->phrase("PleaseSelect"); // "PleaseSelect" text
+		$this->tahunajaran_id->Lookup = new Lookup('tahunajaran_id', 't002_tahunajaran', FALSE, 'id', ["TahunAjaran","","",""], [], [], [], [], [], [], '', '');
+		$this->tahunajaran_id->DefaultErrorMessage = $Language->phrase("IncorrectInteger");
+		$this->tahunajaran_id->SourceTableVar = 't201_users';
+		$this->fields['tahunajaran_id'] = &$this->tahunajaran_id;
+
+		// kelas_id
+		$this->kelas_id = new ReportField('r202_users', 'r202_users', 'x_kelas_id', 'kelas_id', '`kelas_id`', '`kelas_id`', 3, 11, -1, FALSE, '`kelas_id`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'TEXT');
+		$this->kelas_id->Sortable = TRUE; // Allow sort
+		$this->kelas_id->Lookup = new Lookup('kelas_id', 't003_kelas', FALSE, 'id', ["Kelas","","",""], [], [], [], [], [], [], '', '');
+		$this->kelas_id->DefaultErrorMessage = $Language->phrase("IncorrectInteger");
+		$this->kelas_id->SourceTableVar = 't201_users';
+		$this->fields['kelas_id'] = &$this->kelas_id;
+
+		// semester_id
+		$this->semester_id = new ReportField('r202_users', 'r202_users', 'x_semester_id', 'semester_id', '`semester_id`', '`semester_id`', 3, 11, -1, FALSE, '`semester_id`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'TEXT');
+		$this->semester_id->Sortable = TRUE; // Allow sort
+		$this->semester_id->Lookup = new Lookup('semester_id', 't004_semester', FALSE, 'id', ["Semester","","",""], [], [], [], [], [], [], '', '');
+		$this->semester_id->DefaultErrorMessage = $Language->phrase("IncorrectInteger");
+		$this->semester_id->SourceTableVar = 't201_users';
+		$this->fields['semester_id'] = &$this->semester_id;
 	}
 
 	// Field Visibility

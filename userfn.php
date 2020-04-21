@@ -48,11 +48,11 @@ function MenuItem_Adding($item) {
 	//var_dump($item);
 	// Return FALSE if menu item not allowed
 
-	if ($item->Text == "Berita" or $item->Text == "Beranda") {
-		return IsLoggedIn();
+	if ($item->Text == "Berita") {
+		return IsEmptySetting();
 	}
-	else {
-		return TRUE;
+	if ($item->Text != "Berita") {
+		return IsLoggedIn();
 	}
 }
 
@@ -101,5 +101,33 @@ function PersonalData_Downloading(&$row) {
 function PersonalData_Deleted($row) {
 
 	//echo "PersonalData Deleted";
+}
+
+// untuk check apakah setting sudah terisi
+// sekolah_id
+// tahunajaran_id
+function IsEmptySetting() {
+	if (IsLoggedIn()) {
+		$q = "select * from t201_users where EmployeeID = ".CurrentUserID()."";
+		$row = ExecuteRow($q);
+	}
+
+	//echo "username: " . CurrentUserInfo("Username") . "; sekolah_id: " . CurrentUserInfo("sekolah_id") . "; tahunajaran_id: " . CurrentUserInfo("tahunajaran_id") . "<br>";
+	//echo "username: " . $row["Username"] . "; sekolah_id: " . $row["sekolah_id"] . "; tahunajaran_id: " . $row["tahunajaran_id"] . "<br>";
+
+	$mShow = false;
+	if (IsLoggedIn()
+		and !empty($row["sekolah_id"])
+		and !empty($row["tahunajaran_id"])
+		and !empty($row["kelas_id"])
+		and !empty($row["semester_id"])
+		) {
+		$mShow = true;
+
+		//echo "sekolah_id: " . !empty(CurrentUserInfo("sekolah_id")) . "tahunajaran_id: " . !empty(CurrentUserInfo("tahunajaran_id"));
+		//echo "username: " . CurrentUserInfo("Username") . "; sekolah_id: " . CurrentUserInfo("sekolah_id") . "; tahunajaran_id: " . CurrentUserInfo("tahunajaran_id") . "<br>";
+
+	}
+	return $mShow;
 }
 ?>
